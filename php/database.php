@@ -46,7 +46,7 @@ class Database{
      * @param  instance $stmt PDOステートメントオブジェクト
      * @return string[][]       結果の2次元配列
      */
-    public static function dataEncode($stmt){
+    public static function encode($stmt){
         $count = 0;
         while($result[$count] = $stmt->fetch(PDO::FETCH_BOTH)){
             $count++;

@@ -34,7 +34,9 @@
 		</a><br>
 			<a href="default/_php---Config.php.html">		Config.php
 		</a><br>
-			<a href="default/_php---database.php.html">		database.php
+			<a href="default/_php---Database.php.html">		Database.php
+		</a><br>
+			<a href="default/_php---Task.php.html">		Task.php
 		</a><br>
 	  </div><br />
       
@@ -44,6 +46,8 @@
 		    		<a href="default/Carbon.html">Carbon</a><br />
 	    		<a href="default/Config.html">Config</a><br />
 	    		<a href="default/Database.html">Database</a><br />
+	    		<a href="default/Subject.html">Subject</a><br />
+	    		<a href="default/Task.html">Task</a><br />
 	  </div>
                 </td>
     <td>
@@ -77,11 +81,15 @@
 		<h2>_</h2>
 		<dl>
 							<dt><b>__construct</b></dt>
-				<dd>in file Carbon.php, method <a href="default/Carbon.html#method__construct">Carbon::__construct()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Create a new Carbon instance.</dd>
+				<dd>in file Database.php, method <a href="default/Database.html#method__construct">Database::__construct()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;このクラスのコンストラクタです。</dd>
+							<dt><b>__construct</b></dt>
+				<dd>in file Task.php, method <a href="default/Subject.html#method__construct">Subject::__construct()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;このクラスのコンストラクタです。</dd>
+							<dt><b>__construct</b></dt>
+				<dd>in file Task.php, method <a href="default/Task.html#method__construct">Task::__construct()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;このクラスのコンストラクタです。</dd>
 							<dt><b>__construct</b></dt>
 				<dd>in file Config.php, method <a href="default/Config.html#method__construct">Config::__construct()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;このクラスのコンストラクタです。</dd>
 							<dt><b>__construct</b></dt>
-				<dd>in file database.php, method <a href="default/Database.html#method__construct">Database::__construct()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;このクラスのコンストラクタです。</dd>
+				<dd>in file Carbon.php, method <a href="default/Carbon.html#method__construct">Carbon::__construct()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Create a new Carbon instance.</dd>
 							<dt><b>__get</b></dt>
 				<dd>in file Carbon.php, function <a href="default/_php---Carbon.php.html#function__get">__get()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Get a part of the Carbon object</dd>
 							<dt><b>__isset</b></dt>
@@ -154,6 +162,8 @@
 	<div>
 		<h2>c</h2>
 		<dl>
+							<dt><b>$content</b></dt>
+				<dd>in file Task.php, variable <a href="default/Task.html#var$content">Task::$content</a><br>&nbsp;&nbsp;&nbsp;&nbsp;課題の内容</dd>
 							<dt><b>Carbon</b></dt>
 				<dd>in file Carbon.php, class <a href="default/Carbon.html">Carbon</a></dd>
 							<dt><b>closest</b></dt>
@@ -162,6 +172,8 @@
 				<dd>in file Config.php, class <a href="default/Config.html">Config</a><br>&nbsp;&nbsp;&nbsp;&nbsp;コンフィグの情報を保持します。</dd>
 							<dt><b>copy</b></dt>
 				<dd>in file Carbon.php, function <a href="default/_php---Carbon.php.html#functioncopy">copy()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Get a copy of the instance.</dd>
+							<dt><b>create</b></dt>
+				<dd>in file Task.php, method <a href="default/Task.html#methodcreate">Task::create()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;新しくタスクを作成し、インスタンスとして返す。</dd>
 							<dt><b>create</b></dt>
 				<dd>in file Carbon.php, function <a href="default/_php---Carbon.php.html#functioncreate">create()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Create a new Carbon instance from a specific date and time.</dd>
 							<dt><b>createFromDate</b></dt>
@@ -186,12 +198,12 @@
 	<div>
 		<h2>d</h2>
 		<dl>
+							<dt><b>$date</b></dt>
+				<dd>in file Task.php, variable <a href="default/Task.html#var$date">Task::$date</a><br>&nbsp;&nbsp;&nbsp;&nbsp;日付</dd>
 							<dt><b>$days</b></dt>
 				<dd>in file Carbon.php, variable <a href="default/Carbon.html#var$days">Carbon::$days</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Names of days of the week.</dd>
 							<dt><b>Database</b></dt>
-				<dd>in file database.php, class <a href="default/Database.html">Database</a><br>&nbsp;&nbsp;&nbsp;&nbsp;データベースにアクセスするためのクラスです。</dd>
-							<dt><b>dataEncode</b></dt>
-				<dd>in file database.php, method <a href="default/Database.html#methoddataEncode">Database::dataEncode()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;渡されたPDOステートメントオブジェクトを配列として返します。</dd>
+				<dd>in file Database.php, class <a href="default/Database.html">Database</a><br>&nbsp;&nbsp;&nbsp;&nbsp;データベースにアクセスするためのクラスです。</dd>
 							<dt><b>day</b></dt>
 				<dd>in file Carbon.php, function <a href="default/_php---Carbon.php.html#functionday">day()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Set the instance's day</dd>
 							<dt><b>DAYS_PER_WEEK</b></dt>
@@ -224,8 +236,8 @@
 				<dd>in file Carbon.php, function <a href="default/_php---Carbon.php.html#functiondiffInWeeks">diffInWeeks()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Get the difference in weeks</dd>
 							<dt><b>diffInYears</b></dt>
 				<dd>in file Carbon.php, function <a href="default/_php---Carbon.php.html#functiondiffInYears">diffInYears()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Get the difference in years</dd>
-							<dt><b>database.php</b></dt>
-				<dd>procedural page <a href="default/_php---database.php.html">database.php</a></dd>
+							<dt><b>Database.php</b></dt>
+				<dd>procedural page <a href="default/_php---Database.php.html">Database.php</a></dd>
 					</dl>
 	</div>
 	<a href="elementindex_default.html#top">top</a><br>
@@ -234,6 +246,10 @@
 	<div>
 		<h2>e</h2>
 		<dl>
+							<dt><b>$engName</b></dt>
+				<dd>in file Task.php, variable <a href="default/Subject.html#var$engName">Subject::$engName</a><br>&nbsp;&nbsp;&nbsp;&nbsp;英語教科名</dd>
+							<dt><b>encode</b></dt>
+				<dd>in file Database.php, method <a href="default/Database.html#methodencode">Database::encode()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;渡されたPDOステートメントオブジェクトを配列として返します。</dd>
 							<dt><b>endOfCentury</b></dt>
 				<dd>in file Carbon.php, function <a href="default/_php---Carbon.php.html#functionendOfCentury">endOfCentury()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Resets the date to end of the century and time to 23:59:59</dd>
 							<dt><b>endOfDay</b></dt>
@@ -260,6 +276,22 @@
 		<dl>
 							<dt><b>farthest</b></dt>
 				<dd>in file Carbon.php, function <a href="default/_php---Carbon.php.html#functionfarthest">farthest()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Get the farthest date from the instance.</dd>
+							<dt><b>fetch</b></dt>
+				<dd>in file Task.php, method <a href="default/Task.html#methodfetch">Task::fetch()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;タスクidを元にタスクを取得し、Taskクラスのインスタンスとして返す。</dd>
+							<dt><b>fetchContent</b></dt>
+				<dd>in file Task.php, method <a href="default/Task.html#methodfetchContent">Task::fetchContent()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;タスクidを元にそのタスクの内容を取得します。</dd>
+							<dt><b>fetchDate</b></dt>
+				<dd>in file Task.php, method <a href="default/Task.html#methodfetchDate">Task::fetchDate()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;タスクidを元にそのタスクの日付を取得します。</dd>
+							<dt><b>fetchEnglishName</b></dt>
+				<dd>in file Task.php, method <a href="default/Subject.html#methodfetchEnglishName">Subject::fetchEnglishName()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;教科idから英語教科名を取得します。</dd>
+							<dt><b>fetchMdified</b></dt>
+				<dd>in file Task.php, method <a href="default/Task.html#methodfetchMdified">Task::fetchMdified()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;タスクidを元にそのタスクの更新日時を取得します。</dd>
+							<dt><b>fetchName</b></dt>
+				<dd>in file Task.php, method <a href="default/Subject.html#methodfetchName">Subject::fetchName()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;教科idから教科名を取得します。</dd>
+							<dt><b>fetchShortName</b></dt>
+				<dd>in file Task.php, method <a href="default/Subject.html#methodfetchShortName">Subject::fetchShortName()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;教科idから短縮教科名を取得します。</dd>
+							<dt><b>fetchSubject</b></dt>
+				<dd>in file Task.php, method <a href="default/Task.html#methodfetchSubject">Task::fetchSubject()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;タスクidを元にそのタスクの教科を取得します。</dd>
 							<dt><b>firstOfMonth</b></dt>
 				<dd>in file Carbon.php, function <a href="default/_php---Carbon.php.html#functionfirstOfMonth">firstOfMonth()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Modify to the first occurrence of a given day of the week  in the current month. If no dayOfWeek is provided, modify to the  first day of the current month.  Use the supplied consts  to indicate the desired dayOfWeek, ex. static::MONDAY.</dd>
 							<dt><b>firstOfQuarter</b></dt>
@@ -269,7 +301,7 @@
 							<dt><b>formatLocalized</b></dt>
 				<dd>in file Carbon.php, function <a href="default/_php---Carbon.php.html#functionformatLocalized">formatLocalized()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Format the instance with the current locale.  You can set the current  locale using setlocale() http://php.net/setlocale.</dd>
 							<dt><b>freeQuery</b></dt>
-				<dd>in file database.php, method <a href="default/Database.html#methodfreeQuery">Database::freeQuery()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;渡されたSQL文をそのまま実行します。</dd>
+				<dd>in file Database.php, method <a href="default/Database.html#methodfreeQuery">Database::freeQuery()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;渡されたSQL文をそのまま実行します。</dd>
 							<dt><b>FRIDAY</b></dt>
 				<dd>in file Carbon.php, class constant <a href="default/Carbon.html#constFRIDAY">Carbon::FRIDAY</a></dd>
 					</dl>
@@ -288,10 +320,16 @@
 				<dd>in file Config.php, method <a href="default/Config.html#methodgetDbPass">Config::getDbPass()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;データベースのパスワードを取得します。</dd>
 							<dt><b>getDbUser</b></dt>
 				<dd>in file Config.php, method <a href="default/Config.html#methodgetDbUser">Config::getDbUser()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;データベースのユーザー名を取得します。</dd>
+							<dt><b>getEnglishName</b></dt>
+				<dd>in file Task.php, method <a href="default/Subject.html#methodgetEnglishName">Subject::getEnglishName()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;自身の英語教科名を取得します。</dd>
 							<dt><b>getLocale</b></dt>
 				<dd>in file Carbon.php, function <a href="default/_php---Carbon.php.html#functiongetLocale">getLocale()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Get the current translator locale</dd>
 							<dt><b>getMode</b></dt>
 				<dd>in file Config.php, method <a href="default/Config.html#methodgetMode">Config::getMode()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Modeの設定値を取得します。</dd>
+							<dt><b>getName</b></dt>
+				<dd>in file Task.php, method <a href="default/Subject.html#methodgetName">Subject::getName()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;自身の教科名を取得します。</dd>
+							<dt><b>getShortName</b></dt>
+				<dd>in file Task.php, method <a href="default/Subject.html#methodgetShortName">Subject::getShortName()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;自身の短縮教科名を取得します。</dd>
 							<dt><b>getTestNow</b></dt>
 				<dd>in file Carbon.php, function <a href="default/_php---Carbon.php.html#functiongetTestNow">getTestNow()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Get the Carbon instance (real or mock) to be returned when a &quot;now&quot;  instance is created.</dd>
 							<dt><b>getTranslator</b></dt>
@@ -334,6 +372,10 @@
 	<div>
 		<h2>i</h2>
 		<dl>
+							<dt><b>$id</b></dt>
+				<dd>in file Task.php, variable <a href="default/Subject.html#var$id">Subject::$id</a><br>&nbsp;&nbsp;&nbsp;&nbsp;教科id</dd>
+							<dt><b>$id</b></dt>
+				<dd>in file Task.php, variable <a href="default/Task.html#var$id">Task::$id</a><br>&nbsp;&nbsp;&nbsp;&nbsp;タスクid</dd>
 							<dt><b>instance</b></dt>
 				<dd>in file Carbon.php, function <a href="default/_php---Carbon.php.html#functioninstance">instance()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Create a Carbon instance from a DateTime one.</dd>
 							<dt><b>isBirthday</b></dt>
@@ -400,6 +442,8 @@
 	<div>
 		<h2>m</h2>
 		<dl>
+							<dt><b>$mdified</b></dt>
+				<dd>in file Task.php, variable <a href="default/Task.html#var$mdified">Task::$mdified</a><br>&nbsp;&nbsp;&nbsp;&nbsp;更新日時</dd>
 							<dt><b>max</b></dt>
 				<dd>in file Carbon.php, function <a href="default/_php---Carbon.php.html#functionmax">max()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Get the maximum instance between a given instance (default now) and the current instance.</dd>
 							<dt><b>maximum</b></dt>
@@ -430,6 +474,8 @@
 	<div>
 		<h2>n</h2>
 		<dl>
+							<dt><b>$name</b></dt>
+				<dd>in file Task.php, variable <a href="default/Subject.html#var$name">Subject::$name</a><br>&nbsp;&nbsp;&nbsp;&nbsp;教科名</dd>
 							<dt><b>ne</b></dt>
 				<dd>in file Carbon.php, function <a href="default/_php---Carbon.php.html#functionne">ne()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Determines if the instance is not equal to another</dd>
 							<dt><b>next</b></dt>
@@ -476,6 +522,10 @@
 	<div>
 		<h2>s</h2>
 		<dl>
+							<dt><b>$shortName</b></dt>
+				<dd>in file Task.php, variable <a href="default/Subject.html#var$shortName">Subject::$shortName</a><br>&nbsp;&nbsp;&nbsp;&nbsp;短縮教科名</dd>
+							<dt><b>$subject</b></dt>
+				<dd>in file Task.php, variable <a href="default/Task.html#var$subject">Task::$subject</a><br>&nbsp;&nbsp;&nbsp;&nbsp;教科</dd>
 							<dt><b>safeCreateDateTimeZone</b></dt>
 				<dd>in file Carbon.php, method <a href="default/Carbon.html#methodsafeCreateDateTimeZone">Carbon::safeCreateDateTimeZone()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Creates a DateTimeZone from a string, DateTimeZone or integer offset.</dd>
 							<dt><b>SATURDAY</b></dt>
@@ -530,6 +580,8 @@
 				<dd>in file Carbon.php, function <a href="default/_php---Carbon.php.html#functionsubHour">subHour()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Remove an hour from the instance</dd>
 							<dt><b>subHours</b></dt>
 				<dd>in file Carbon.php, function <a href="default/_php---Carbon.php.html#functionsubHours">subHours()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Remove hours from the instance</dd>
+							<dt><b>Subject</b></dt>
+				<dd>in file Task.php, class <a href="default/Subject.html">Subject</a><br>&nbsp;&nbsp;&nbsp;&nbsp;教科の情報を扱うクラスです。</dd>
 							<dt><b>subMinute</b></dt>
 				<dd>in file Carbon.php, function <a href="default/_php---Carbon.php.html#functionsubMinute">subMinute()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Remove a minute from the instance</dd>
 							<dt><b>subMinutes</b></dt>
@@ -574,6 +626,10 @@
 				<dd>in file Carbon.php, variable <a href="default/Carbon.html#var$toStringFormat">Carbon::$toStringFormat</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Format to use for __toString method when type juggling occurs.</dd>
 							<dt><b>$translator</b></dt>
 				<dd>in file Carbon.php, variable <a href="default/Carbon.html#var$translator">Carbon::$translator</a><br>&nbsp;&nbsp;&nbsp;&nbsp;A translator to ... er ... translate stuff.</dd>
+							<dt><b>Task.php</b></dt>
+				<dd>procedural page <a href="default/_php---Task.php.html">Task.php</a></dd>
+							<dt><b>Task</b></dt>
+				<dd>in file Task.php, class <a href="default/Task.html">Task</a><br>&nbsp;&nbsp;&nbsp;&nbsp;課題についての情報を扱うクラスです。</dd>
 							<dt><b>THURSDAY</b></dt>
 				<dd>in file Carbon.php, class constant <a href="default/Carbon.html#constTHURSDAY">Carbon::THURSDAY</a></dd>
 							<dt><b>timestamp</b></dt>
@@ -661,7 +717,7 @@
 	<a href="elementindex_default.html#top">top</a><br>
         <div class="credit">
 		    <hr />
-		    Documentation generated on Thu, 21 Jan 2016 20:47:13 +0900 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.4</a>
+		    Documentation generated on Fri, 22 Jan 2016 01:07:59 +0900 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.4</a>
 	      </div>
       </td></tr></table>
     </td>
