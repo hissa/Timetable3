@@ -1,0 +1,784 @@
+<html>
+<head>
+<title>Docs For Class Carbon</title>
+<link rel="stylesheet" type="text/css" href="../media/style.css">
+</head>
+<body>
+
+<table border="0" cellspacing="0" cellpadding="0" height="48" width="100%">
+  <tr>
+    <td class="header_top">default</td>
+  </tr>
+  <tr><td class="header_line"><img src="../media/empty.png" width="1" height="1" border="0" alt=""  /></td></tr>
+  <tr>
+    <td class="header_menu">
+        
+                                    
+                              		  [ <a href="../classtrees_default.html" class="menu">class tree: default</a> ]
+		  [ <a href="../elementindex_default.html" class="menu">index: default</a> ]
+		  	    [ <a href="../elementindex.html" class="menu">all elements</a> ]
+    </td>
+  </tr>
+  <tr><td class="header_line"><img src="../media/empty.png" width="1" height="1" border="0" alt=""  /></td></tr>
+</table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="200" class="menu">
+      <b>Packages:</b><br />
+              <a href="../li_default.html">default</a><br />
+            <br /><br />
+                        <b>Files:</b><br />
+      	  <div class="package">
+			<a href="../default/_php---Carbon.php.html">		Carbon.php
+		</a><br>
+			<a href="../default/_php---Config.php.html">		Config.php
+		</a><br>
+	  </div><br />
+      
+      
+            <b>Classes:</b><br />
+        <div class="package">
+		    		<a href="../default/Carbon.html">Carbon</a><br />
+	    		<a href="../default/Config.html">Config</a><br />
+	  </div>
+                </td>
+    <td>
+      <table cellpadding="10" cellspacing="0" width="100%" border="0"><tr><td valign="top">
+
+<h1>Class: Carbon</h1>
+Source Location: /php/Carbon.php<br /><br />
+
+
+
+<table width="100%" border="0">
+<tr><td valign="top">
+
+<h3><a href="#class_details">Class Overview</a></h3>
+<pre>DateTime
+   |
+   --Carbon</pre><br />
+<div class="description"></div><br /><br />
+
+
+
+
+
+
+        
+</td>
+
+<td valign="top">
+<h3><a href="#class_vars">Variables</a></h3>
+<ul>
+    <li><a href="../default/Carbon.html#var$days">$days</a></li>
+    <li><a href="../default/Carbon.html#var$relativeKeywords">$relativeKeywords</a></li>
+    <li><a href="../default/Carbon.html#var$testNow">$testNow</a></li>
+    <li><a href="../default/Carbon.html#var$toStringFormat">$toStringFormat</a></li>
+    <li><a href="../default/Carbon.html#var$translator">$translator</a></li>
+    <li><a href="../default/Carbon.html#var$weekendDays">$weekendDays</a></li>
+    <li><a href="../default/Carbon.html#var$weekEndsAt">$weekEndsAt</a></li>
+    <li><a href="../default/Carbon.html#var$weekStartsAt">$weekStartsAt</a></li>
+  </ul>
+</td>
+
+<td valign="top">
+<h3><a href="#class_consts">Constants</a></h3>
+<ul>
+    <li><a href="../default/Carbon.html#constDAYS_PER_WEEK">DAYS_PER_WEEK</a></li>
+    <li><a href="../default/Carbon.html#constDEFAULT_TO_STRING_FORMAT">DEFAULT_TO_STRING_FORMAT</a></li>
+    <li><a href="../default/Carbon.html#constFRIDAY">FRIDAY</a></li>
+    <li><a href="../default/Carbon.html#constHOURS_PER_DAY">HOURS_PER_DAY</a></li>
+    <li><a href="../default/Carbon.html#constMINUTES_PER_HOUR">MINUTES_PER_HOUR</a></li>
+    <li><a href="../default/Carbon.html#constMONDAY">MONDAY</a></li>
+    <li><a href="../default/Carbon.html#constMONTHS_PER_YEAR">MONTHS_PER_YEAR</a></li>
+    <li><a href="../default/Carbon.html#constSATURDAY">SATURDAY</a></li>
+    <li><a href="../default/Carbon.html#constSECONDS_PER_MINUTE">SECONDS_PER_MINUTE</a></li>
+    <li><a href="../default/Carbon.html#constSUNDAY">SUNDAY</a></li>
+    <li><a href="../default/Carbon.html#constTHURSDAY">THURSDAY</a></li>
+    <li><a href="../default/Carbon.html#constTUESDAY">TUESDAY</a></li>
+    <li><a href="../default/Carbon.html#constWEDNESDAY">WEDNESDAY</a></li>
+    <li><a href="../default/Carbon.html#constWEEKS_PER_YEAR">WEEKS_PER_YEAR</a></li>
+    <li><a href="../default/Carbon.html#constYEARS_PER_CENTURY">YEARS_PER_CENTURY</a></li>
+    <li><a href="../default/Carbon.html#constYEARS_PER_DECADE">YEARS_PER_DECADE</a></li>
+  </ul>
+</td>
+
+<td valign="top">
+<h3><a href="#class_methods">Methods</a></h3>
+<ul>
+    <li><a href="../default/Carbon.html#methodsafeCreateDateTimeZone">safeCreateDateTimeZone</a></li>
+    <li><a href="../default/Carbon.html#method__construct">__construct</a></li>
+  </ul>
+</td>
+
+</tr></table>
+<hr />
+
+<table width="100%" border="0"><tr>
+
+
+
+
+<td valign="top">
+<h3>Inherited Constants</h3>
+<div class="tags">
+<h4>Class: DateTime (Internal Class)</h4>
+<dl>
+<dt>
+  ATOM = 'Y-m-d\\TH:i:sP'
+</dt>
+<dd>
+   
+</dd>
+<dt>
+  COOKIE = 'l, d-M-Y H:i:s T'
+</dt>
+<dd>
+   
+</dd>
+<dt>
+  ISO8601 = 'Y-m-d\\TH:i:sO'
+</dt>
+<dd>
+   
+</dd>
+<dt>
+  RFC822 = 'D, d M y H:i:s O'
+</dt>
+<dd>
+   
+</dd>
+<dt>
+  RFC850 = 'l, d-M-y H:i:s T'
+</dt>
+<dd>
+   
+</dd>
+<dt>
+  RFC1036 = 'D, d M y H:i:s O'
+</dt>
+<dd>
+   
+</dd>
+<dt>
+  RFC1123 = 'D, d M Y H:i:s O'
+</dt>
+<dd>
+   
+</dd>
+<dt>
+  RFC2822 = 'D, d M Y H:i:s O'
+</dt>
+<dd>
+   
+</dd>
+<dt>
+  RFC3339 = 'Y-m-d\\TH:i:sP'
+</dt>
+<dd>
+   
+</dd>
+<dt>
+  RSS = 'D, d M Y H:i:s O'
+</dt>
+<dd>
+   
+</dd>
+<dt>
+  W3C = 'Y-m-d\\TH:i:sP'
+</dt>
+<dd>
+   
+</dd>
+</dl>
+</div>
+</td>
+
+
+<td valign="top">
+<h3>Inherited Methods</h3>
+<div class="tags">
+<h4>Class: DateTime (Internal Class)</h4>
+<dl>
+    <dt>
+    constructor __construct ( [$time = ], [$object = ] )
+
+  </dt>
+  <dd>
+    
+  </dd>
+    <dt>
+    add ( $interval )
+
+  </dt>
+  <dd>
+    
+  </dd>
+    <dt>
+    createFromFormat ( $format, $time, [$object = ] )
+
+  </dt>
+  <dd>
+    
+  </dd>
+    <dt>
+    diff ( $object, [$absolute = ] )
+
+  </dt>
+  <dd>
+    
+  </dd>
+    <dt>
+    format ( $format )
+
+  </dt>
+  <dd>
+    
+  </dd>
+    <dt>
+    getLastErrors (  )
+
+  </dt>
+  <dd>
+    
+  </dd>
+    <dt>
+    getOffset (  )
+
+  </dt>
+  <dd>
+    
+  </dd>
+    <dt>
+    getTimestamp (  )
+
+  </dt>
+  <dd>
+    
+  </dd>
+    <dt>
+    getTimezone (  )
+
+  </dt>
+  <dd>
+    
+  </dd>
+    <dt>
+    modify ( $modify )
+
+  </dt>
+  <dd>
+    
+  </dd>
+    <dt>
+    setDate ( $year, $month, $day )
+
+  </dt>
+  <dd>
+    
+  </dd>
+    <dt>
+    setISODate ( $year, $week, [$day = ] )
+
+  </dt>
+  <dd>
+    
+  </dd>
+    <dt>
+    setTime ( $hour, $minute, [$second = ] )
+
+  </dt>
+  <dd>
+    
+  </dd>
+    <dt>
+    setTimestamp ( $unixtimestamp )
+
+  </dt>
+  <dd>
+    
+  </dd>
+    <dt>
+    setTimezone ( $timezone )
+
+  </dt>
+  <dd>
+    
+  </dd>
+    <dt>
+    sub ( $interval )
+
+  </dt>
+  <dd>
+    
+  </dd>
+    <dt>
+    __set_state (  )
+
+  </dt>
+  <dd>
+    
+  </dd>
+    <dt>
+    __wakeup (  )
+
+  </dt>
+  <dd>
+    
+  </dd>
+  </dl>
+</div>
+</td>
+
+</tr></table>
+<hr />
+
+<a name="class_details"></a>
+<h3>Class Details</h3>
+<div class="tags">
+[line 52]<br />
+</div><br /><br />
+<div class="top">[ <a href="#top">Top</a> ]</div><br />
+
+<hr />
+<a name="class_vars"></a>
+<h3>Class Variables</h3>
+<div class="tags">
+	<a name="var$days"></a>
+	<p></p>
+	<h4>static $days = <span class="value">array(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self::SUNDAY&nbsp;=&gt;&nbsp;'Sunday',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self::MONDAY&nbsp;=&gt;&nbsp;'Monday',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self::TUESDAY&nbsp;=&gt;&nbsp;'Tuesday',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self::WEDNESDAY&nbsp;=&gt;&nbsp;'Wednesday',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self::THURSDAY&nbsp;=&gt;&nbsp;'Thursday',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self::FRIDAY&nbsp;=&gt;&nbsp;'Friday',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self::SATURDAY&nbsp;=&gt;&nbsp;'Saturday',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;)</span></h4>
+	<p>[line 70]</p>
+  Names of days of the week.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>protected</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>array</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="var$relativeKeywords"></a>
+	<p></p>
+	<h4>static $relativeKeywords = <span class="value">array(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'this',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'next',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'last',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'tomorrow',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'yesterday',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'-',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'first',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'last',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'ago',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;)</span></h4>
+	<p>[line 87]</p>
+  Terms used to detect if a time passed is a relative date.<br /><br /><p>This is here for testing purposes.</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>protected</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>array</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="var$testNow"></a>
+	<p></p>
+	<h4>static $testNow = <span class="value"></span></h4>
+	<p>[line 155]</p>
+  A test Carbon instance to be returned when now instances are created.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>protected</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>\Carbon\Carbon</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="var$toStringFormat"></a>
+	<p></p>
+	<h4>static $toStringFormat = <span class="value">&nbsp;self::DEFAULT_TO_STRING_FORMAT</span></h4>
+	<p>[line 124]</p>
+  Format to use for __toString method when type juggling occurs.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>protected</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>string</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="var$translator"></a>
+	<p></p>
+	<h4>static $translator = <span class="value"></span></h4>
+	<p>[line 162]</p>
+  A translator to ... er ... translate stuff.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>protected</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>\Symfony\Component\Translation\TranslatorInterface</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="var$weekendDays"></a>
+	<p></p>
+	<h4>static $weekendDays = <span class="value">array(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self::SATURDAY,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self::SUNDAY,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;)</span></h4>
+	<p>[line 145]</p>
+  Days of weekend.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>protected</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>array</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="var$weekEndsAt"></a>
+	<p></p>
+	<h4>static $weekEndsAt = <span class="value">&nbsp;self::SUNDAY</span></h4>
+	<p>[line 138]</p>
+  Last day of week.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>protected</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>int</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="var$weekStartsAt"></a>
+	<p></p>
+	<h4>static $weekStartsAt = <span class="value">&nbsp;self::MONDAY</span></h4>
+	<p>[line 131]</p>
+  First day of week.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>protected</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>int</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+</div><br />
+
+<hr />
+<a name="class_methods"></a>
+<h3>Class Methods</h3>
+<div class="tags">
+  <hr />
+	<a name="methodsafeCreateDateTimeZone"></a>
+	<h3>static method safeCreateDateTimeZone <span class="smalllinenumber">[line 173]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>static \DateTimeZone safeCreateDateTimeZone(
+\DateTimeZone|string|int|null
+$object)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Creates a DateTimeZone from a string, DateTimeZone or integer offset.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>throws:</b>&nbsp;&nbsp;</td><td>InvalidArgumentException</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>protected</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+
+
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">\DateTimeZone|string|int|null&nbsp;&nbsp;</td>
+        <td><b>$object</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+
+  <hr />
+	<a name="method__construct"></a>
+	<h3>constructor __construct <span class="smalllinenumber">[line 217]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>Carbon __construct(
+[string|null
+$time = null], [\DateTimeZone|string|null
+$tz = null])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Create a new Carbon instance.<br /><br /><p>Please see the testing aids section (specifically static::setTestNow())  for more on the possibility of this constructor returning a test instance.</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+Overrides DateTime::constructor __construct ( [$time = ], [$object = ] ) (parent method not documented)<br /><br />
+
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string|null&nbsp;&nbsp;</td>
+        <td><b>$time</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+          <tr>
+        <td class="type">\DateTimeZone|string|null&nbsp;&nbsp;</td>
+        <td><b>$tz</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+</div><br />
+
+<hr />
+<a name="class_consts"></a>
+<h3>Class Constants</h3>
+<div class="tags">
+	<a name="constDAYS_PER_WEEK"></a>
+	<p></p>
+	<h4>DAYS_PER_WEEK = <span class="value">&nbsp;7</span></h4>
+	<p>[line 107]</p>
+  
+  <br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="constDEFAULT_TO_STRING_FORMAT"></a>
+	<p></p>
+	<h4>DEFAULT_TO_STRING_FORMAT = <span class="value">&nbsp;'Y-m-d&nbsp;H:i:s'</span></h4>
+	<p>[line 117]</p>
+  Default format to use for __toString method when type juggling occurs.<br /><br />
+  <br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="constFRIDAY"></a>
+	<p></p>
+	<h4>FRIDAY = <span class="value">&nbsp;5</span></h4>
+	<p>[line 62]</p>
+  
+  <br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="constHOURS_PER_DAY"></a>
+	<p></p>
+	<h4>HOURS_PER_DAY = <span class="value">&nbsp;24</span></h4>
+	<p>[line 108]</p>
+  
+  <br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="constMINUTES_PER_HOUR"></a>
+	<p></p>
+	<h4>MINUTES_PER_HOUR = <span class="value">&nbsp;60</span></h4>
+	<p>[line 109]</p>
+  
+  <br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="constMONDAY"></a>
+	<p></p>
+	<h4>MONDAY = <span class="value">&nbsp;1</span></h4>
+	<p>[line 58]</p>
+  
+  <br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="constMONTHS_PER_YEAR"></a>
+	<p></p>
+	<h4>MONTHS_PER_YEAR = <span class="value">&nbsp;12</span></h4>
+	<p>[line 105]</p>
+  
+  <br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="constSATURDAY"></a>
+	<p></p>
+	<h4>SATURDAY = <span class="value">&nbsp;6</span></h4>
+	<p>[line 63]</p>
+  
+  <br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="constSECONDS_PER_MINUTE"></a>
+	<p></p>
+	<h4>SECONDS_PER_MINUTE = <span class="value">&nbsp;60</span></h4>
+	<p>[line 110]</p>
+  
+  <br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="constSUNDAY"></a>
+	<p></p>
+	<h4>SUNDAY = <span class="value">&nbsp;0</span></h4>
+	<p>[line 57]</p>
+  The day constants.<br /><br />
+  <br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="constTHURSDAY"></a>
+	<p></p>
+	<h4>THURSDAY = <span class="value">&nbsp;4</span></h4>
+	<p>[line 61]</p>
+  
+  <br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="constTUESDAY"></a>
+	<p></p>
+	<h4>TUESDAY = <span class="value">&nbsp;2</span></h4>
+	<p>[line 59]</p>
+  
+  <br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="constWEDNESDAY"></a>
+	<p></p>
+	<h4>WEDNESDAY = <span class="value">&nbsp;3</span></h4>
+	<p>[line 60]</p>
+  
+  <br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="constWEEKS_PER_YEAR"></a>
+	<p></p>
+	<h4>WEEKS_PER_YEAR = <span class="value">&nbsp;52</span></h4>
+	<p>[line 106]</p>
+  
+  <br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="constYEARS_PER_CENTURY"></a>
+	<p></p>
+	<h4>YEARS_PER_CENTURY = <span class="value">&nbsp;100</span></h4>
+	<p>[line 103]</p>
+  Number of X in Y.<br /><br />
+  <br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="constYEARS_PER_DECADE"></a>
+	<p></p>
+	<h4>YEARS_PER_DECADE = <span class="value">&nbsp;10</span></h4>
+	<p>[line 104]</p>
+  
+  <br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+</div><br />
+
+        <div class="credit">
+		    <hr />
+		    Documentation generated on Thu, 21 Jan 2016 19:13:25 +0900 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.4</a>
+	      </div>
+      </td></tr></table>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>
