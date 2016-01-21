@@ -94,5 +94,13 @@ class Config{
     public function getDbUser(){
         return $this->dbUser;
     }
+
+    /**
+     * データベースのパスワードを取得します。
+     * @return string データベースのパスワード
+     */
+    public function getDbPass(){
+        return $this->dbPass;
+    }
 }
 ?>
