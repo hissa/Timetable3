@@ -3,9 +3,9 @@ require_once "Database.php";
 require_once "Carbon.php";
 require_once "Config.php";
 use Carbon\Carbon;
-$SETTINGS = new Config("../config.ini");
+$SETTINGS = new Config("../config.ini", "../timetable1.ini");
 
-var_dump(Task::create(Carbon::today(),new Subject(1),"テスト"));
+var_dump(Task::fetch(1));
 
 /**
  * 課題についての情報を扱うクラスです。
@@ -126,8 +126,10 @@ class Task{
      * @return Carbon     タスクの日付
      */
     protected static function fetchDate($id){
+        global $SETTINGS;
         $db = new Database();
-        $sql = "select date from tasks where id=".$id.";";
+        $sql = "select date from ".$SETTINGS->getTasks().
+                " where id=".$id.";";
         $stmt = $db->query($sql);
         $result = Database::encode($stmt);
         return Carbon::parse($result[0][0]);
@@ -139,8 +141,10 @@ class Task{
      * @return Subject     タスクの教科
      */
     protected static function fetchSubject($id){
+        global $SETTINGS;
         $db = new Database();
-        $sql = "select subject_id from tasks where id=".$id.";";
+        $sql = "select subject_id from ".$SETTINGS->getTasks().
+                " where id=".$id.";";
         $stmt = $db->query($sql);
         $result = Database::encode($stmt);
         return new Subject(intval($result[0][0]));
@@ -152,8 +156,9 @@ class Task{
      * @return string     タスクの内容
      */
     protected static function fetchContent($id){
+        global $SETTINGS;
         $db = new Database();
-        $sql = "select content from tasks where id=".$id.";";
+        $sql = "select content from ".$SETTINGS->getTasks()." where id=".$id.";";
         $stmt = $db->query($sql);
         $result = Database::encode($stmt);
         return $result[0][0];
@@ -165,8 +170,10 @@ class Task{
      * @return Carbon     タスクの更新日時
      */
     protected static function fetchMdified($id){
+        global $SETTINGS;
         $db = new Database();
-        $sql = "select mdified from tasks where id=".$id.";";
+        $sql = "select mdified from ".$SETTINGS->getTasks().
+                " where id=".$id.";";
         $stmt = $db->query($sql);
         $result = Database::encode($stmt);
         return Carbon::parse($result[0][0]);
@@ -217,8 +224,10 @@ class Subject{
      * @return boolean     存在する場合はtrueを返します。
      */
     protected static function isIdExist($id){
+        global $SETTINGS;
         $db = new Database();
-        $sql = "select exists(select id from subjects where id=".$id.");";
+        $sql = "select exists(select id from ".$SETTINGS->getSubjects().
+                " where id=".$id.");";
         $stmt = $db->query($sql);
         $result = Database::encode($stmt);
         return $result[0][0];
@@ -230,8 +239,10 @@ class Subject{
      * @return string            教科名
      */
     protected static function fetchName($id){
+        global $SETTINGS;
         $db = new Database();
-        $sql = "select name from subjects where id=".$id.";";
+        $sql = "select name from ".$SETTINGS->getSubjects().
+                " where id=".$id.";";
         $stmt = $db->query($sql);
         $result = Database::encode($stmt);
         return $result[0][0];
@@ -243,8 +254,10 @@ class Subject{
      * @return string            短縮教科名
      */
     protected static function fetchShortName($id){
+        global $SETTINGS;
         $db = new Database();
-        $sql = "select short_name from subjects where id=".$id.";";
+        $sql = "select short_name from ".$SETTINGS->getSubjects().
+                " where id=".$id.";";
         $stmt = $db->query($sql);
         $result = Database::encode($stmt);
         return $result[0][0];
