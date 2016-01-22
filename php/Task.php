@@ -1,9 +1,11 @@
 <?php
 require_once "Database.php";
 require_once "Carbon.php";
-use "Carbon";
+require_once "Config.php";
+use Carbon\Carbon;
+$SETTINGS = new Config("../config.ini");
 
-
+var_dump(Task::create(Carbon::today(),new Subject(1),"テスト"));
 
 /**
  * 課題についての情報を扱うクラスです。
@@ -56,19 +58,19 @@ class Task{
                                 $mdified = null
                                 ){
         // 決まった型かnullに当てはまらない場合は処理を中断します。
-        if(gettype($id) !== "integer" || !is_null($id)){
+        if(gettype($id) !== "integer" && !is_null($id)){
             throw new Exception("idはintで指定してください。");
         }
-        if(get_class($date) !== "Carbon" || !is_null($date)){
+        if(get_class($date) !== "Carbon\Carbon" && !is_null($date)){
             throw new Exception("dateはCarbonクラスのインスタンスで指定してください。");
         }
-        if(get_class($subject) !== "Subject" || !is_null($subject)){
+        if(get_class($subject) !== "Subject" && !is_null($subject)){
             throw new Exception("subjectはSubjectクラスのインスタンスで指定してください。");
         }
-        if(gettype($content) !== "string" || !is_null($content)){
+        if(gettype($content) !== "string" && !is_null($content)){
             throw new Exception("contentはstringで指定してください。");
         }
-        if(get_class($mdified) !== "Carbon" || !is_null($mdified)){
+        if(get_class($mdified) !== "Carbon" && !is_null($mdified)){
             throw new Exception("mdifiedはCarbonクラスのインスタンスで指定してください。");
         }
         $this->id = $id;
@@ -102,7 +104,7 @@ class Task{
      * @return Task          作成されたインスタンス
      */
     public static function create($date, $subject, $content){
-        if(get_class($date) !== "Carbon"){
+        if(get_class($date) !== "Carbon\Carbon"){
             throw new Exception("dateがCarbonクラスのインスタンスではありません。");
         }
         if(gettype($subject) === "integer"){
@@ -141,7 +143,7 @@ class Task{
         $sql = "select subject_id from tasks where id=".$id.";";
         $stmt = $db->query($sql);
         $result = Database::encode($stmt);
-        return new Subject($result[0][0]);
+        return new Subject(intval($result[0][0]));
     }
 
     /**
@@ -169,13 +171,6 @@ class Task{
         $result = Database::encode($stmt);
         return Carbon::parse($result[0][0]);
     }
-
-    /**
-     * 自身のインスタンスをデータベースに登録することができるかどうかを確認します。
-     */
-    protected function canExist(){
-
-    }
 }
 
 /**
@@ -195,12 +190,6 @@ class Subject{
     protected $name;
 
     /**
-     * 英語教科名
-     * @var string
-     */
-    protected $engName;
-
-    /**
      * 短縮教科名
      * @var string
      */
@@ -214,9 +203,25 @@ class Subject{
         if(gettype($id) !== "integer"){
             throw new Exception("idはintで指定してください。");
         }
+        if(!self::isIdExist($id)){
+            throw new Exception("指定された教科idは存在しない可能性があります。");
+        }
         $this->id = $id;
         $this->name = self::fetchName($this->id);
         $this->shortName = self::fetchShortName($this->id);
+    }
+
+    /**
+     * 指定されたidが存在するかどうかを確認する
+     * @param  int  $id 教科id
+     * @return boolean     存在する場合はtrueを返します。
+     */
+    protected static function isIdExist($id){
+        $db = new Database();
+        $sql = "select exists(select id from subjects where id=".$id.");";
+        $stmt = $db->query($sql);
+        $result = Database::encode($stmt);
+        return $result[0][0];
     }
 
     /**
@@ -226,7 +231,7 @@ class Subject{
      */
     protected static function fetchName($id){
         $db = new Database();
-        $sql = "select name from subjects where id=".$subjectId.";";
+        $sql = "select name from subjects where id=".$id.";";
         $stmt = $db->query($sql);
         $result = Database::encode($stmt);
         return $result[0][0];
@@ -239,7 +244,7 @@ class Subject{
      */
     protected static function fetchShortName($id){
         $db = new Database();
-        $sql = "select short_name from subjects where id=".$subjectId.";";
+        $sql = "select short_name from subjects where id=".$id.";";
         $stmt = $db->query($sql);
         $result = Database::encode($stmt);
         return $result[0][0];

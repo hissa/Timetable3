@@ -11,6 +11,9 @@ class Database{
      */
     public function  __construct(){
         global $SETTINGS;
+        if(is_null($SETTINGS)){
+            throw new Exception("設定ファイルを読み込むことができませんでした。");
+        }
         $dbname = $SETTINGS->getDbName();
         $host = $SETTINGS->getDbHost();
         $dsn = "mysql:dbname=".$dbname.";host=".$host.";";
@@ -32,7 +35,7 @@ class Database{
      * @param  string $sql SQL文
      * @return instance      返されたPDOステートメントオブジェクト
      */
-    public function freeQuery($sql){
+    public function query($sql){
         try{
             $stmt = $this->pdo->query($sql);
         }catch(Exception $e){
