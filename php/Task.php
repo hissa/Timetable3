@@ -3,6 +3,8 @@ require_once "Database.php";
 require_once "Carbon.php";
 use "Carbon";
 
+
+
 /**
  * 課題についての情報を扱うクラスです。
  */
@@ -214,7 +216,6 @@ class Subject{
         }
         $this->id = $id;
         $this->name = self::fetchName($this->id);
-        $this->engName = self::fetchEnglishName($this->id);
         $this->shortName = self::fetchShortName($this->id);
     }
 
@@ -226,19 +227,6 @@ class Subject{
     protected static function fetchName($id){
         $db = new Database();
         $sql = "select name from subjects where id=".$subjectId.";";
-        $stmt = $db->query($sql);
-        $result = Database::encode($stmt);
-        return $result[0][0];
-    }
-
-    /**
-     * 教科idから英語教科名を取得します。
-     * @param  int $subjectId 教科id
-     * @return string            英語教科名
-     */
-    protected static function fetchEnglishName($id){
-        $db = new Database();
-        $sql = "select english_name from subjects where id=".$subjectId.";";
         $stmt = $db->query($sql);
         $result = Database::encode($stmt);
         return $result[0][0];
@@ -263,14 +251,6 @@ class Subject{
      */
     public function getName(){
         return $this->name;
-    }
-
-    /**
-     * 自身の英語教科名を取得します。
-     * @return string 英語教科名
-     */
-    public function getEnglishName(){
-        return $this->engName;
     }
 
     /**
