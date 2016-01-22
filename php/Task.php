@@ -55,24 +55,19 @@ class Task{
                                 ){
         // 決まった型かnullに当てはまらない場合は処理を中断します。
         if(gettype($id) !== "integer" || !is_null($id)){
-            echo "idはintで指定してください。";
-            die();
+            throw new Exception("idはintで指定してください。");
         }
         if(get_class($date) !== "Carbon" || !is_null($date)){
-            echo "dateはCarbonクラスのインスタンスで指定してください。";
-            die();
+            throw new Exception("dateはCarbonクラスのインスタンスで指定してください。");
         }
         if(get_class($subject) !== "Subject" || !is_null($subject)){
-            echo "subjectはSubjectクラスのインスタンスで指定してください。";
-            die();
+            throw new Exception("subjectはSubjectクラスのインスタンスで指定してください。");
         }
         if(gettype($content) !== "string" || !is_null($content)){
-            echo "contentはstringで指定してください。"
-            die();
+            throw new Exception("contentはstringで指定してください。");
         }
         if(get_class($mdified) !== "Carbon" || !is_null($mdified)){
-            echo "mdifiedはCarbonクラスのインスタンスで指定してください。";
-            die();
+            throw new Exception("mdifiedはCarbonクラスのインスタンスで指定してください。");
         }
         $this->id = $id;
         $this->date = $date;
@@ -88,8 +83,7 @@ class Task{
      */
     public static function fetch($id){
         if(gettype($id) !== "integer"){
-            echo "idはintで指定してください。";
-            die();
+            throw new Exception("idはintで指定してください。");
         }
         $date = self::fetchDate($id);
         $subject = self::fetchSubject($id);
@@ -107,20 +101,17 @@ class Task{
      */
     public static function create($date, $subject, $content){
         if(get_class($date) !== "Carbon"){
-            echo "dateがCarbonクラスのインスタンスではありません。";
-            die();
+            throw new Exception("dateがCarbonクラスのインスタンスではありません。");
         }
         if(gettype($subject) === "integer"){
             // $subjectがidで渡された場合
             $subject = new Subject($subject);
         }
         if(get_class($subject) !== "Subject"){
-            echo "subjectが整数またはSubjectクラスのインスタンスではありません。";
-            die();
+            throw new Exception("subjectが整数またはSubjectクラスのインスタンスではありません。");
         }
         if(gettype($content) !== "string"){
-            echo "contentはstringで渡してください。"
-            die();
+            throw new Exception("contentはstringで指定してください。");
         }
         return new self(null, $date, $subject, $content, null);
     }
@@ -176,6 +167,13 @@ class Task{
         $result = Database::encode($stmt);
         return Carbon::parse($result[0][0]);
     }
+
+    /**
+     * 自身のインスタンスをデータベースに登録することができるかどうかを確認します。
+     */
+    protected function canExist(){
+
+    }
 }
 
 /**
@@ -212,8 +210,7 @@ class Subject{
      */
     public function __construct($id){
         if(gettype($id) !== "integer"){
-            echo "idはintで指定してください。";
-            die();
+            throw new Exception("idはintで指定してください。");
         }
         $this->id = $id;
         $this->name = self::fetchName($this->id);
