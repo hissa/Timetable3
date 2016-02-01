@@ -5,10 +5,12 @@ require_once "Config.php";
 use Carbon\Carbon;
 $SETTINGS = new Config("../config.ini", "../timetable1.ini");
 
-var_dump(Task::fetch(1));
+$task = Task::create(Carbon::today(), 1, "てすと2");
+$task->addNewTask();
 
 /**
  * 課題についての情報を扱うクラスです。
+ * このクラスは予めグローバル変数$SETTINGSにConfigクラスのインスタンスを用意しておく必要があります。
  */
 class Task{
     // データベースから直接取得できるもの
@@ -40,7 +42,7 @@ class Task{
      * 更新日時
      * @var Carbon
      */
-    protected $mdified;
+    protected $modified;
 
     /**
      * このクラスのコンストラクタです。
@@ -51,11 +53,11 @@ class Task{
      * @param Carbon|null $date    タスクの日付
      * @param Subject|null $subject タスクの教科
      * @param string|null $content タスクの内容
-     * @param Carbon|null $mdified 更新日時
+     * @param Carbon|null $modified 更新日時
      */
     protected function __construct($id = null, $date = null,
                                 $subject = null, $content = null,
-                                $mdified = null
+                                $modified = null
                                 ){
         // 決まった型かnullに当てはまらない場合は処理を中断します。
         if(gettype($id) !== "integer" && !is_null($id)){
@@ -70,14 +72,14 @@ class Task{
         if(gettype($content) !== "string" && !is_null($content)){
             throw new Exception("contentはstringで指定してください。");
         }
-        if(get_class($mdified) !== "Carbon" && !is_null($mdified)){
-            throw new Exception("mdifiedはCarbonクラスのインスタンスで指定してください。");
+        if(get_class($modified) !== "Carbon\Carbon" && !is_null($modified)){
+            throw new Exception("modifiedはCarbonクラスのインスタンスで指定してください。");
         }
         $this->id = $id;
         $this->date = $date;
         $this->subject = $subject;
         $this->content = $content;
-        $this->mdified = $mdified;
+        $this->modified = $modified;
     }
 
     /**
@@ -92,8 +94,8 @@ class Task{
         $date = self::fetchDate($id);
         $subject = self::fetchSubject($id);
         $content = self::fetchContent($id);
-        $mdfied = self::fetchMdified($id);
-        return new self($id, $date, $subject, $content, $mdified);
+        $modified = self::fetchmodified($id);
+        return new self($id, $date, $subject, $content, $modified);
     }
 
     /**
@@ -169,19 +171,108 @@ class Task{
      * @param  int $id タスクid
      * @return Carbon     タスクの更新日時
      */
-    protected static function fetchMdified($id){
+    protected static function fetchmodified($id){
         global $SETTINGS;
         $db = new Database();
-        $sql = "select mdified from ".$SETTINGS->getTasks().
+        $sql = "select modified from ".$SETTINGS->getTasks().
                 " where id=".$id.";";
         $stmt = $db->query($sql);
         $result = Database::encode($stmt);
         return Carbon::parse($result[0][0]);
     }
+
+    /**
+     * 自身のインスタンスの情報をデータベースに追加することができるかどうかを確認します。
+     * @return boolean 追加することができるならばtrueを返す
+     */
+    protected function canAddToDatabase(){
+        if($this->doesIdExist()){
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 自身のインスタンスの情報をデータベースに上書きすることができるかどうかを確認します。
+     * @return boolean 上書きすることができるならばtrueを返す
+     */
+    protected function canOverwriteToDatabase(){
+        global $SETTINGS;
+        $db = new Database();
+        $idExists = $this->doesIdExist();
+        if(!$idExists){
+            return false;
+        }
+        $dbDate = self::fetchDate($this->id);
+        $thisDate = $this->date;
+        $dateEqual = $dbDate->eq($thisDate);
+        if(!$dateEqual){
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 自身のインスタンスのIDがデータベース上に存在するかどうかを確認します。
+     * @return bool 存在したらtrueを返す
+     */
+    protected function doesIdExist(){
+        if(is_null($this->id)){
+            return false;
+        }
+        global $SETTINGS;
+        $db = new Database();
+        $sql = "select exists(select id from ".$SETTINGS->getTasks().
+                " where id=".$this->id.");";
+        $stmt = $db->query($sql);
+        $result = Database::encode($stmt);
+        return $result[0][0];
+    }
+
+    /**
+     * 新しいTaskとして自身のインスタンスの情報をデータベースに追加します。
+     * データベースに追加する条件を満たしていなければ例外をスローします。
+     */
+    public function addNewTask(){
+        global $SETTINGS;
+        if(!$this->canAddToDatabase()){
+            throw new Exception("データベースに追加できる条件を満たしていません。");
+        }
+        $db = new Database();
+        $sql = "insert into ".$SETTINGS->getTasks()."(date, subject_id, content, modified)".
+                "values(\"".$this->date->format("Y/m/d")."\",".
+                $this->subject->getId().",\"".$this->content."\",\"".
+                Carbon::now()."\");";
+        $db->query($sql);
+    }
+
+    /**
+     * データベースにある既存のtaskを上書きします。
+     * 上書きできる条件を満たしていなければ例外をスローします。
+     */
+    public function overwriteToDatabase(){
+        global $SETTINGS;
+        if(!$this->canOverwriteToDatabase()){
+            throw new Exception("データベースに上書きする条件を満たしていません。");
+        }
+        $db = new Database();
+        $sql = "update ".$SETTINGS->getTasks()." set content=\"".$this->content.
+                "\" where id=".$this->id.";";
+        $db->query($sql);
+    }
+
+    /**
+     * 自身のインスタンスのcontentに文字列をsetします。
+     * @param string $content setする文字列
+     */
+    public function setContent($content){
+        $this->content = $content;
+    }
 }
 
 /**
  * 教科の情報を扱うクラスです。
+ * 予めグローバル変数$SETTINGSにConfigクラスのインスタンスを用意しておく必要があります。
  */
 class Subject{
     /**
@@ -210,7 +301,7 @@ class Subject{
         if(gettype($id) !== "integer"){
             throw new Exception("idはintで指定してください。");
         }
-        if(!self::isIdExist($id)){
+        if(!self::doesIdExist($id)){
             throw new Exception("指定された教科idは存在しない可能性があります。");
         }
         $this->id = $id;
@@ -223,7 +314,7 @@ class Subject{
      * @param  int  $id 教科id
      * @return boolean     存在する場合はtrueを返します。
      */
-    protected static function isIdExist($id){
+    protected static function doesIdExist($id){
         global $SETTINGS;
         $db = new Database();
         $sql = "select exists(select id from ".$SETTINGS->getSubjects().
@@ -277,6 +368,14 @@ class Subject{
      */
     public function getShortName(){
         return $this->shortName;
+    }
+
+    /**
+     * 自身の教科idを取得します。
+     * @return int 教科id
+     */
+    public function getId(){
+        return $this->id;
     }
 }
 ?>
