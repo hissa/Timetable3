@@ -45,6 +45,12 @@ class Task{
     protected $modified;
 
     /**
+     * 削除された
+     * @var boolean
+     */
+    protected $deleted;
+
+    /**
      * このクラスのコンストラクタです。
      * 全てのメンバ変数を指定してインスタンスを作る時のみnewを使用し、
      * 通常はfetchやcreateメソッドを使用すること。
@@ -57,7 +63,7 @@ class Task{
      */
     protected function __construct($id = null, $date = null,
                                 $subject = null, $content = null,
-                                $modified = null
+                                $modified = null, $deleted = null
                                 ){
         // 決まった型かnullに当てはまらない場合は処理を中断します。
         if(gettype($id) !== "integer" && !is_null($id)){
@@ -75,11 +81,15 @@ class Task{
         if(get_class($modified) !== "Carbon\Carbon" && !is_null($modified)){
             throw new Exception("modifiedはCarbonクラスのインスタンスで指定してください。");
         }
+        if(gettype($deleted) !== "boolean" && !is_null($deleted)){
+            throw new Exception("deletedはbooleanで指定してください。");
+        }
         $this->id = $id;
         $this->date = $date;
         $this->subject = $subject;
         $this->content = $content;
         $this->modified = $modified;
+        $this->deleted = $deleted;
     }
 
     /**
@@ -94,8 +104,9 @@ class Task{
         $date = self::fetchDate($id);
         $subject = self::fetchSubject($id);
         $content = self::fetchContent($id);
-        $modified = self::fetchmodified($id);
-        return new self($id, $date, $subject, $content, $modified);
+        $modified = self::fetchModified($id);
+        $deleted = self::fetchDeleted($id);
+        return new self($id, $date, $subject, $content, $modified, $deleted);
     }
 
     /**
@@ -171,7 +182,7 @@ class Task{
      * @param  int $id タスクid
      * @return Carbon     タスクの更新日時
      */
-    protected static function fetchmodified($id){
+    protected static function fetchModified($id){
         global $SETTINGS;
         $db = new Database();
         $sql = "select modified from ".$SETTINGS->dbTasks.
@@ -179,6 +190,16 @@ class Task{
         $stmt = $db->query($sql);
         $result = Database::encode($stmt);
         return Carbon::parse($result[0][0]);
+    }
+
+    protected static function fetchDeleted($id){
+        global $SETTINGS;
+        $db = new Database();
+        $sql = "select modified from ".$SETTINGS->dbTasks.
+                " where id=".$id.";";
+        $stmt = $db->query($sql);
+        $result = Database::encode($stmt);
+        return $result[0][0];
     }
 
     /**
@@ -268,6 +289,34 @@ class Task{
     public function setContent($content){
         $this->content = $content;
     }
+
+    /**
+     * 自身のインスタンスに削除フラグを立てます。
+     * このメソッドを実行しても直ちにデータベースに保存されることはありません。
+     * overwriteToDatabase()メソッドを実行して上書きする必要があります。
+     */
+    public function delete(){
+        $this->deleted = 1;
+    }
+
+    /**
+     * 日付と教科を指定してそれに合う情報があればTaskインスタンスで返します。
+     * 削除フラグが立っているものは取得しません。
+     * @param  Carbon\Carbon $date    日付
+     * @param  Subject $subject 教科
+     * @return Task|NULL          情報
+     */
+    public static function fetchTask($date, $subject){
+        $db = new Database();
+        $sql = "select id from ".$SETTINGS->dbTasks.
+                " where date=\"".$date->format("Y/m/d")."\" and".
+                " subject=".$subject->getId()." and".
+                " deleted=0;";
+        $stmt = $db->query($sql);
+        $result = Database::encode($stmt);
+        return self::fetch(intval($result[0][0]));
+    }
+
 }
 
 /**
