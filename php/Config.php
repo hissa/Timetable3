@@ -66,6 +66,30 @@ class Config{
     private $dbSchedules;
 
     /**
+     * 表の曜日部分に表示するヘッダーのテキストです（カンマ区切り）
+     * @var string
+     */
+    private $headOfWeek;
+
+    /**
+     * 表のコマ数部分に表示するヘッダーのテキストです（カンマ区切り）
+     * @var string
+     */
+    private $headOfSide;
+
+    /**
+     * 表の曜日部分のヘッダーを表示するかどうか（表示する:1 表示しない:0）
+     * @var int
+     */
+    private $showTopHead;
+
+    /**
+     * 表のコマ数部分のヘッダーを表示するかどうか（表示する:1 表示しない:0）
+     * @var int
+     */
+    private $showSideHead;
+
+    /**
      * このクラスのコンストラクタです。
      * @param string 全体configファイルのパス
      * @param string 個別configファイルのパス
@@ -106,6 +130,28 @@ class Config{
         if(is_null($this->dbSchedules = $config["SchedulesTableName"])){
             throw new Exception("個別configのSchedulesTableName".
                                 "の値が見つかりません。");
+        }
+        if(is_null($this->headOfWeek = $config["headOfWeek"])){
+            $this->headOfWeek = "月,火,水,木,金"; // 初期値
+        }
+        if(is_null($this->sideOfWeek = $config["sideOfWeek"])){
+            $this->headOfWeek = "1,2,3"; // 初期値
+        }
+        if(is_null($this->showTopHead = intval($config["showTopHead"]))){
+            $this->showTopHead = 1; // 初期値
+        }else{
+            // 0以外の数が入っていた場合は1にする。
+            if($this->showTopHead === 0){
+                $this->showTopHead = 1;
+            }
+        }
+        if(is_null($this->showSideHead = intval($config["showSideHead"]))){
+            $this->showSideHead = 1; //初期値
+        }else{
+            // 0以外の数が入っていた場合は1にする。
+            if($this->showSideHead === 0){
+                $this->showTopHead = 0;
+            }
         }
     }
 
@@ -198,8 +244,16 @@ class Config{
             case "dbTasks":
                 return $this->dbTasks;
             case "dbSchedules":
-                return $this->dbTasks;
-            case default:
+                return $this->dbSchedules;
+            case "headOfWeek":
+                return $this->headOfWeek;
+            case "headOfSide":
+                return $this->headOfSide;
+            case "showTopHead":
+                return $this->showTopHead;
+            case "showSideHead":
+                return $this->showSideHead;
+            default:
                 throw new Exception("存在しない変数がアクセスされました。");
         }
     }
