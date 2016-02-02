@@ -69,7 +69,7 @@ class Task{
         if(gettype($id) !== "integer" && !is_null($id)){
             throw new Exception("idはintで指定してください。");
         }
-        if(get_class($date) !== "Carbon\Carbon" && !is_null($date)){
+        if(is_subclass_of($date) !== "Carbon\Carbon" && !is_null($date)){
             throw new Exception("dateはCarbonクラスのインスタンスで指定してください。");
         }
         if(get_class($subject) !== "Subject" && !is_null($subject)){
@@ -117,7 +117,7 @@ class Task{
      * @return Task          作成されたインスタンス
      */
     public static function create($date, $subject, $content){
-        if(get_class($date) !== "Carbon\Carbon"){
+        if(is_subclass_of($date) !== "Carbon\Carbon"){
             throw new Exception("dateがCarbonクラスのインスタンスではありません。");
         }
         if(gettype($subject) === "integer"){
