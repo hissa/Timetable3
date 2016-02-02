@@ -130,7 +130,7 @@ class Task{
     protected static function fetchDate($id){
         global $SETTINGS;
         $db = new Database();
-        $sql = "select date from ".$SETTINGS->getTasks().
+        $sql = "select date from ".$SETTINGS->dbTasks.
                 " where id=".$id.";";
         $stmt = $db->query($sql);
         $result = Database::encode($stmt);
@@ -145,7 +145,7 @@ class Task{
     protected static function fetchSubject($id){
         global $SETTINGS;
         $db = new Database();
-        $sql = "select subject_id from ".$SETTINGS->getTasks().
+        $sql = "select subject_id from ".$SETTINGS->dbTasks.
                 " where id=".$id.";";
         $stmt = $db->query($sql);
         $result = Database::encode($stmt);
@@ -160,7 +160,7 @@ class Task{
     protected static function fetchContent($id){
         global $SETTINGS;
         $db = new Database();
-        $sql = "select content from ".$SETTINGS->getTasks()." where id=".$id.";";
+        $sql = "select content from ".$SETTINGS->dbTasks." where id=".$id.";";
         $stmt = $db->query($sql);
         $result = Database::encode($stmt);
         return $result[0][0];
@@ -174,7 +174,7 @@ class Task{
     protected static function fetchmodified($id){
         global $SETTINGS;
         $db = new Database();
-        $sql = "select modified from ".$SETTINGS->getTasks().
+        $sql = "select modified from ".$SETTINGS->dbTasks.
                 " where id=".$id.";";
         $stmt = $db->query($sql);
         $result = Database::encode($stmt);
@@ -222,7 +222,7 @@ class Task{
         }
         global $SETTINGS;
         $db = new Database();
-        $sql = "select exists(select id from ".$SETTINGS->getTasks().
+        $sql = "select exists(select id from ".$SETTINGS->dbTasks.
                 " where id=".$this->id.");";
         $stmt = $db->query($sql);
         $result = Database::encode($stmt);
@@ -239,7 +239,7 @@ class Task{
             throw new Exception("データベースに追加できる条件を満たしていません。");
         }
         $db = new Database();
-        $sql = "insert into ".$SETTINGS->getTasks()."(date, subject_id, content, modified)".
+        $sql = "insert into ".$SETTINGS->dbTasks."(date, subject_id, content, modified)".
                 "values(\"".$this->date->format("Y/m/d")."\",".
                 $this->subject->getId().",\"".$this->content."\",\"".
                 Carbon::now()."\");";
@@ -256,7 +256,7 @@ class Task{
             throw new Exception("データベースに上書きする条件を満たしていません。");
         }
         $db = new Database();
-        $sql = "update ".$SETTINGS->getTasks()." set content=\"".$this->content.
+        $sql = "update ".$SETTINGS->dbTasks." set content=\"".$this->content.
                 "\" where id=".$this->id.";";
         $db->query($sql);
     }
@@ -317,7 +317,7 @@ class Subject{
     protected static function doesIdExist($id){
         global $SETTINGS;
         $db = new Database();
-        $sql = "select exists(select id from ".$SETTINGS->getSubjects().
+        $sql = "select exists(select id from ".$SETTINGS->dbSubjects.
                 " where id=".$id.");";
         $stmt = $db->query($sql);
         $result = Database::encode($stmt);
@@ -332,7 +332,7 @@ class Subject{
     protected static function fetchName($id){
         global $SETTINGS;
         $db = new Database();
-        $sql = "select name from ".$SETTINGS->getSubjects().
+        $sql = "select name from ".$SETTINGS->dbSubjects.
                 " where id=".$id.";";
         $stmt = $db->query($sql);
         $result = Database::encode($stmt);
@@ -347,7 +347,7 @@ class Subject{
     protected static function fetchShortName($id){
         global $SETTINGS;
         $db = new Database();
-        $sql = "select short_name from ".$SETTINGS->getSubjects().
+        $sql = "select short_name from ".$SETTINGS->dbSubjects.
                 " where id=".$id.";";
         $stmt = $db->query($sql);
         $result = Database::encode($stmt);
