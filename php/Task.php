@@ -101,11 +101,11 @@ class Task{
         if(gettype($id) !== "integer"){
             throw new Exception("idはintで指定してください。");
         }
-        $date = self::fetchDate($id);
-        $subject = self::fetchSubject($id);
-        $content = self::fetchContent($id);
-        $modified = self::fetchModified($id);
-        $deleted = self::fetchDeleted($id);
+        $date = static::fetchDate($id);
+        $subject = static::fetchSubject($id);
+        $content = static::fetchContent($id);
+        $modified = static::fetchModified($id);
+        $deleted = static::fetchDeleted($id);
         return new self($id, $date, $subject, $content, $modified, $deleted);
     }
 
@@ -224,7 +224,7 @@ class Task{
         if(!$idExists){
             return false;
         }
-        $dbDate = self::fetchDate($this->id);
+        $dbDate = static::fetchDate($this->id);
         $thisDate = $this->date;
         $dateEqual = $dbDate->eq($thisDate);
         if(!$dateEqual){
@@ -314,7 +314,7 @@ class Task{
                 " deleted=0;";
         $stmt = $db->query($sql);
         $result = Database::encode($stmt);
-        return self::fetch(intval($result[0][0]));
+        return static::fetch(intval($result[0][0]));
     }
 
 }
@@ -350,12 +350,12 @@ class Subject{
         if(gettype($id) !== "integer"){
             throw new Exception("idはintで指定してください。");
         }
-        if(!self::doesIdExist($id)){
+        if(!static::doesIdExist($id)){
             throw new Exception("指定された教科idは存在しない可能性があります。");
         }
         $this->id = $id;
-        $this->name = self::fetchName($this->id);
-        $this->shortName = self::fetchShortName($this->id);
+        $this->name = static::fetchName($this->id);
+        $this->shortName = static::fetchShortName($this->id);
     }
 
     /**
