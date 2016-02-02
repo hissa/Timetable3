@@ -90,6 +90,12 @@ class Config{
     private $showSideHead;
 
     /**
+     * 表示する期間を今週を0として初めと終わりをカンマ区切り
+     * @var string
+     */
+    private $showPeriodWeek;
+
+    /**
      * このクラスのコンストラクタです。
      * @param string 全体configファイルのパス
      * @param string 個別configファイルのパス
@@ -153,6 +159,9 @@ class Config{
                 $this->showTopHead = 0;
             }
         }
+        if(is_null($this->showPeriodWeek = $config["showPeriodWeek"])){
+            $this->showPeriodWeek = "-1,3"; //初期値
+        }
     }
 
     /**
@@ -189,6 +198,8 @@ class Config{
                 return $this->showTopHead;
             case "showSideHead":
                 return $this->showSideHead;
+            case "showPeriodWeek":
+                return $this->showPeriodWeek;
             default:
                 throw new Exception("存在しない変数がアクセスされました。");
         }
