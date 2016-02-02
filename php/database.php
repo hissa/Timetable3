@@ -14,11 +14,11 @@ class Database{
         if(is_null($SETTINGS)){
             throw new Exception("設定ファイルを読み込むことができませんでした。");
         }
-        $dbname = $SETTINGS->getDbName();
-        $host = $SETTINGS->getDbHost();
+        $dbname = $SETTINGS->dbName;
+        $host = $SETTINGS->dbHost;
         $dsn = "mysql:dbname=".$dbname.";host=".$host.";";
-        $user = $SETTINGS->getDbUser();
-        $pass = $SETTINGS->getDbPass();
+        $user = $SETTINGS->dbUser;
+        $pass = $SETTINGS->dbPass;
 
         try{
             $this->pdo = new PDO($dsn, $user, $pass);
