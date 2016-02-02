@@ -172,5 +172,36 @@ class Config{
     public function getSchedules(){
         return $this->dbSchedules;
     }
+
+    /**
+     * ReadOnlyのアクセサ代わりの__getメソッドです。
+     * 直接インスタンスの変数にアクセスしようとするとこのメソッドが呼び出されます。
+     * @param  string $name アクセスしようとした変数名
+     * @return string       アクセスしようとした変数の値
+     */
+    public function __get($name){
+        switch($name){
+            case "dbPriset":
+                return $this->dbPriset;
+            case "mode":
+                return $this->mode;
+            case "dbHost":
+                return $this->dbHost;
+            case "dbName":
+                return $this->dbName;
+            case "dbUser":
+                return $this->dbUser;
+            case "dbPass":
+                return $this->dbPass;
+            case "dbSubjects":
+                return $this->dbSubjects;
+            case "dbTasks":
+                return $this->dbTasks;
+            case "dbSchedules":
+                return $this->dbTasks;
+            case default:
+                throw new Exception("存在しない変数がアクセスされました。");
+        }
+    }
 }
 ?>
