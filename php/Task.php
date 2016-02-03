@@ -5,8 +5,8 @@ require_once "Config.php";
 use Carbon\Carbon;
 $SETTINGS = new Config("../config.ini", "../timetable1.ini");
 
-$task = Task::create(Carbon::today(), 1, "てすと2");
-$task->addNewTask();
+$sub = Subject::fetchSchedule(1,1);
+var_dump($sub);
 
 /**
  * 課題についての情報を扱うクラスです。
@@ -425,6 +425,23 @@ class Subject{
      */
     public function getId(){
         return $this->id;
+    }
+
+    /**
+     * 曜日とコマ数目を指定して教科を取得します。
+     * @param  int $dayOfWeek 曜日
+     * @param  int $classNum  コマ数目
+     * @return Subject       教科
+     */
+    public static function fetchSchedule($dayOfWeek, $classNum){
+        global $SETTINGS;
+        $db = new Database();
+        $sql = "select id from ".$SETTINGS->dbSchedules.
+                " where day_of_week=".$dayOfWeek." and".
+                " class_number=".$classNum.";";
+        $stmt = $db->query($sql);
+        $result = Database::encode($stmt);
+        return new static(intval($result[0][0]));
     }
 }
 ?>
