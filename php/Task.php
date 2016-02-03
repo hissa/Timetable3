@@ -5,9 +5,6 @@ require_once "Config.php";
 use Carbon\Carbon;
 $SETTINGS = new Config("../config.ini", "../timetable1.ini");
 
-$sub = Subject::fetchSchedule(1,1);
-var_dump($sub);
-
 /**
  * 課題についての情報を扱うクラスです。
  * このクラスは予めグローバル変数$SETTINGSにConfigクラスのインスタンスを用意しておく必要があります。
@@ -69,7 +66,7 @@ class Task{
         if(gettype($id) !== "integer" && !is_null($id)){
             throw new Exception("idはintで指定してください。");
         }
-        if(is_subclass_of($date, "Carbon\Carbon") !== true && !is_null($date)){
+        if(is_a($date, "Carbon\Carbon") !== true && !is_null($date)){
             throw new Exception("dateはCarbonクラスのインスタンスで指定してください。");
         }
         if(get_class($subject) !== "Subject" && !is_null($subject)){
@@ -78,11 +75,8 @@ class Task{
         if(gettype($content) !== "string" && !is_null($content)){
             throw new Exception("contentはstringで指定してください。");
         }
-        if(is_subclass_of($date, "Carbon\Carbon") !== true && !is_null($modified)){
+        if(is_a($date, "Carbon\Carbon") !== true && !is_null($modified)){
             throw new Exception("modifiedはCarbonクラスのインスタンスで指定してください。");
-        }
-        if(gettype($deleted) !== "boolean" && !is_null($deleted)){
-            throw new Exception("deletedはbooleanで指定してください。");
         }
         $this->id = $id;
         $this->date = $date;
@@ -117,7 +111,7 @@ class Task{
      * @return Task          作成されたインスタンス
      */
     public static function create($date, $subject, $content){
-        if(is_subclass_of($date, "Carbon\Carbon") !== true){
+        if(is_a($date, "Carbon\Carbon") !== true){
             throw new Exception("dateがCarbonクラスのインスタンスではありません。");
         }
         if(gettype($subject) === "integer"){
@@ -261,7 +255,7 @@ class Task{
         }
         $db = new Database();
         $sql = "insert into ".$SETTINGS->dbTasks."(date, subject_id, content, modified)".
-                "values(\"".$this->date->format("Y/m/d")."\",".
+                "values(\"".$this->date->format("Y-m-d")."\",".
                 $this->subject->getId().",\"".$this->content."\",\"".
                 Carbon::now()."\");";
         $db->query($sql);
@@ -307,14 +301,19 @@ class Task{
      * @return Task|NULL          情報
      */
     public static function fetchTask($date, $subject){
+        global $SETTINGS;
         $db = new Database();
         $sql = "select id from ".$SETTINGS->dbTasks.
-                " where date=\"".$date->format("Y/m/d")."\" and".
-                " subject=".$subject->getId()." and".
+                " where date=\"".$date->format("Y-m-d")."\" and".
+                " subject_id=".$subject->getId()." and".
                 " deleted=0;";
         $stmt = $db->query($sql);
         $result = Database::encode($stmt);
-        return static::fetch(intval($result[0][0]));
+        if($result[0][0]){
+            return static::fetch(intval($result[0][0]));
+        }else{
+            return null;
+        }
     }
 
 }
@@ -436,7 +435,7 @@ class Subject{
     public static function fetchSchedule($dayOfWeek, $classNum){
         global $SETTINGS;
         $db = new Database();
-        $sql = "select id from ".$SETTINGS->dbSchedules.
+        $sql = "select subject_id from ".$SETTINGS->dbSchedules.
                 " where day_of_week=".$dayOfWeek." and".
                 " class_number=".$classNum.";";
         $stmt = $db->query($sql);
