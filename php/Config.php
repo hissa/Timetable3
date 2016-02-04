@@ -96,6 +96,18 @@ class Config{
     private $showPeriodWeek;
 
     /**
+     * 本日に当たる場所に設定するHTMLのclass名
+     * @var string
+     */
+    private $todayClassName;
+
+    /**
+     * 課題有りに当たる場所に設定するHTMLのclass名
+     * @var string
+     */
+    private $taskClassName;
+
+    /**
      * このクラスのコンストラクタです。
      * @param string 全体configファイルのパス
      * @param string 個別configファイルのパス
@@ -137,11 +149,11 @@ class Config{
             throw new Exception("個別configのSchedulesTableName".
                                 "の値が見つかりません。");
         }
-        if(is_null($this->headOfWeek = $config["headOfWeek"])){
-            $this->headOfWeek = "月,火,水,木,金"; // 初期値
+        if(is_null($this->headOfTop = $config["headOfTop"])){
+            $this->headOfTop = "月,火,水,木,金"; // 初期値
         }
-        if(is_null($this->sideOfWeek = $config["sideOfWeek"])){
-            $this->headOfWeek = "1,2,3"; // 初期値
+        if(is_null($this->headOfSide = $config["headOfSide"])){
+            $this->headOfSide = "1,2,3"; // 初期値
         }
         if(is_null($this->showTopHead = intval($config["showTopHead"]))){
             $this->showTopHead = 1; // 初期値
@@ -161,6 +173,12 @@ class Config{
         }
         if(is_null($this->showPeriodWeek = $config["showPeriodWeek"])){
             $this->showPeriodWeek = "-1,3"; //初期値
+        }
+        if(is_null($this->todayClassName = $config["todayClassName"])){
+            $this->todayClassName = "today";
+        }
+        if(is_null($this->taskClassName = $config["taskClassName"])){
+            $this->taskClassName = "task";
         }
     }
 
@@ -190,8 +208,8 @@ class Config{
                 return $this->dbTasks;
             case "dbSchedules":
                 return $this->dbSchedules;
-            case "headOfWeek":
-                return $this->headOfWeek;
+            case "headOfTop":
+                return $this->headOfTop;
             case "headOfSide":
                 return $this->headOfSide;
             case "showTopHead":
@@ -200,6 +218,10 @@ class Config{
                 return $this->showSideHead;
             case "showPeriodWeek":
                 return $this->showPeriodWeek;
+            case "todayClassName":
+                return $this->todayClassName;
+            case "taskClassName":
+                return $this->taskClassName;
             default:
                 throw new Exception("存在しない変数がアクセスされました。");
         }
