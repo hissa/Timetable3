@@ -38,16 +38,21 @@
 		</a><br>
 			<a href="../default/_php---Task.php.html">		Task.php
 		</a><br>
+			<a href="../default/_php---Timetable.php.html">		Timetable.php
+		</a><br>
 	  </div><br />
       
       
             <b>Classes:</b><br />
         <div class="package">
 		    		<a href="../default/Carbon.html">Carbon</a><br />
+	    		<a href="../default/ClassInfo.html">ClassInfo</a><br />
 	    		<a href="../default/Config.html">Config</a><br />
 	    		<a href="../default/Database.html">Database</a><br />
 	    		<a href="../default/Subject.html">Subject</a><br />
 	    		<a href="../default/Task.html">Task</a><br />
+	    		<a href="../default/Timetable.html">Timetable</a><br />
+	    		<a href="../default/TimetableCarbon.html">TimetableCarbon</a><br />
 	  </div>
                 </td>
     <td>
@@ -78,8 +83,9 @@ Source Location: /php/Task.php<br /><br />
 <ul>
     <li><a href="../default/Task.html#var$content">$content</a></li>
     <li><a href="../default/Task.html#var$date">$date</a></li>
+    <li><a href="../default/Task.html#var$deleted">$deleted</a></li>
     <li><a href="../default/Task.html#var$id">$id</a></li>
-    <li><a href="../default/Task.html#var$mdified">$mdified</a></li>
+    <li><a href="../default/Task.html#var$modified">$modified</a></li>
     <li><a href="../default/Task.html#var$subject">$subject</a></li>
   </ul>
 </td>
@@ -89,12 +95,22 @@ Source Location: /php/Task.php<br /><br />
 <h3><a href="#class_methods">Methods</a></h3>
 <ul>
     <li><a href="../default/Task.html#method__construct">__construct</a></li>
+    <li><a href="../default/Task.html#methodaddNewTask">addNewTask</a></li>
+    <li><a href="../default/Task.html#methodcanAddToDatabase">canAddToDatabase</a></li>
+    <li><a href="../default/Task.html#methodcanOverwriteToDatabase">canOverwriteToDatabase</a></li>
     <li><a href="../default/Task.html#methodcreate">create</a></li>
+    <li><a href="../default/Task.html#methoddelete">delete</a></li>
+    <li><a href="../default/Task.html#methoddoesIdExist">doesIdExist</a></li>
     <li><a href="../default/Task.html#methodfetch">fetch</a></li>
     <li><a href="../default/Task.html#methodfetchContent">fetchContent</a></li>
     <li><a href="../default/Task.html#methodfetchDate">fetchDate</a></li>
-    <li><a href="../default/Task.html#methodfetchMdified">fetchMdified</a></li>
+    <li><a href="../default/Task.html#methodfetchDeleted">fetchDeleted</a></li>
+    <li><a href="../default/Task.html#methodfetchModified">fetchModified</a></li>
     <li><a href="../default/Task.html#methodfetchSubject">fetchSubject</a></li>
+    <li><a href="../default/Task.html#methodfetchTask">fetchTask</a></li>
+    <li><a href="../default/Task.html#methodgetContent">getContent</a></li>
+    <li><a href="../default/Task.html#methodoverwriteToDatabase">overwriteToDatabase</a></li>
+    <li><a href="../default/Task.html#methodsetContent">setContent</a></li>
   </ul>
 </td>
 
@@ -115,8 +131,8 @@ Source Location: /php/Task.php<br /><br />
 <a name="class_details"></a>
 <h3>Class Details</h3>
 <div class="tags">
-[line 9]<br />
-課題についての情報を扱うクラスです。<br /><br /></div><br /><br />
+[line 12]<br />
+課題についての情報を扱うクラスです。<br /><br /><p>このクラスは予めグローバル変数$SETTINGSにConfigクラスのインスタンスを用意しておく必要があります。</p><br /></div><br /><br />
 <div class="top">[ <a href="#top">Top</a> ]</div><br />
 
 <hr />
@@ -126,7 +142,7 @@ Source Location: /php/Task.php<br /><br />
 	<a name="var$content"></a>
 	<p></p>
 	<h4>$content = <span class="value"></span></h4>
-	<p>[line 33]</p>
+	<p>[line 36]</p>
   課題の内容<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
@@ -150,7 +166,7 @@ Source Location: /php/Task.php<br /><br />
 	<a name="var$date"></a>
 	<p></p>
 	<h4>$date = <span class="value"></span></h4>
-	<p>[line 21]</p>
+	<p>[line 24]</p>
   日付<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
@@ -171,10 +187,34 @@ Source Location: /php/Task.php<br /><br />
       </table>
 	</div><br /><br />
 	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="var$deleted"></a>
+	<p></p>
+	<h4>$deleted = <span class="value"></span></h4>
+	<p>[line 48]</p>
+  削除された<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>protected</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>boolean</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
 	<a name="var$id"></a>
 	<p></p>
 	<h4>$id = <span class="value"></span></h4>
-	<p>[line 15]</p>
+	<p>[line 18]</p>
   タスクid<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
@@ -195,10 +235,10 @@ Source Location: /php/Task.php<br /><br />
       </table>
 	</div><br /><br />
 	<div class="top">[ <a href="#top">Top</a> ]</div><br />
-	<a name="var$mdified"></a>
+	<a name="var$modified"></a>
 	<p></p>
-	<h4>$mdified = <span class="value"></span></h4>
-	<p>[line 39]</p>
+	<h4>$modified = <span class="value"></span></h4>
+	<p>[line 42]</p>
   更新日時<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
@@ -222,7 +262,7 @@ Source Location: /php/Task.php<br /><br />
 	<a name="var$subject"></a>
 	<p></p>
 	<h4>$subject = <span class="value"></span></h4>
-	<p>[line 27]</p>
+	<p>[line 30]</p>
   教科<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
@@ -251,7 +291,7 @@ Source Location: /php/Task.php<br /><br />
 <div class="tags">
   <hr />
 	<a name="methodcreate"></a>
-	<h3>static method create <span class="smalllinenumber">[line 108]</span></h3>
+	<h3>static method create <span class="smalllinenumber">[line 113]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -304,7 +344,7 @@ $content)</code>
   </div>
   <hr />
 	<a name="methodfetch"></a>
-	<h3>static method fetch <span class="smalllinenumber">[line 89]</span></h3>
+	<h3>static method fetch <span class="smalllinenumber">[line 94]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -345,7 +385,7 @@ $id)</code>
   </div>
   <hr />
 	<a name="methodfetchContent"></a>
-	<h3>static method fetchContent <span class="smalllinenumber">[line 159]</span></h3>
+	<h3>static method fetchContent <span class="smalllinenumber">[line 165]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -386,7 +426,7 @@ $id)</code>
   </div>
   <hr />
 	<a name="methodfetchDate"></a>
-	<h3>static method fetchDate <span class="smalllinenumber">[line 133]</span></h3>
+	<h3>static method fetchDate <span class="smalllinenumber">[line 135]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -426,12 +466,50 @@ $id)</code>
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
   <hr />
-	<a name="methodfetchMdified"></a>
-	<h3>static method fetchMdified <span class="smalllinenumber">[line 172]</span></h3>
+	<a name="methodfetchDeleted"></a>
+	<h3>static method fetchDeleted <span class="smalllinenumber">[line 189]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>static <a href="../default/Carbon.html">Carbon</a> fetchMdified(
+		<code>static void fetchDeleted(
+
+$id)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		<br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>protected</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+
+
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">&nbsp;&nbsp;</td>
+        <td><b>$id</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodfetchModified"></a>
+	<h3>static method fetchModified <span class="smalllinenumber">[line 179]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>static <a href="../default/Carbon.html">Carbon</a> fetchModified(
 int
 $id)</code>
     </td></tr></table>
@@ -468,7 +546,7 @@ $id)</code>
   </div>
   <hr />
 	<a name="methodfetchSubject"></a>
-	<h3>static method fetchSubject <span class="smalllinenumber">[line 146]</span></h3>
+	<h3>static method fetchSubject <span class="smalllinenumber">[line 150]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -507,10 +585,57 @@ $id)</code>
     </div><br />
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
+  <hr />
+	<a name="methodfetchTask"></a>
+	<h3>static method fetchTask <span class="smalllinenumber">[line 311]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>static <a href="../default/Task.html">Task</a>|NULL fetchTask(
+Carbon\Carbon
+$date, <a href="../default/Subject.html">Subject</a>
+$subject)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		日付と教科を指定してそれに合う情報があればTaskインスタンスで返します。<br /><br /><p>削除フラグが立っているものは取得しません。</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>情報</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+
+
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">Carbon\Carbon&nbsp;&nbsp;</td>
+        <td><b>$date</b>&nbsp;&nbsp;</td>
+        <td>日付</td>
+      </tr>
+          <tr>
+        <td class="type"><a href="../default/Subject.html">Subject</a>&nbsp;&nbsp;</td>
+        <td><b>$subject</b>&nbsp;&nbsp;</td>
+        <td>教科</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
 
   <hr />
 	<a name="method__construct"></a>
-	<h3>constructor __construct <span class="smalllinenumber">[line 52]</span></h3>
+	<h3>constructor __construct <span class="smalllinenumber">[line 61]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -520,7 +645,8 @@ $id = null], [<a href="../default/Carbon.html">Carbon</a>|null
 $date = null], [<a href="../default/Subject.html">Subject</a>|null
 $subject = null], [string|null
 $content = null], [<a href="../default/Carbon.html">Carbon</a>|null
-$mdified = null])</code>
+$modified = null], [
+$deleted = null])</code>
     </td></tr></table>
     </td></tr></table><br />
 	
@@ -563,8 +689,252 @@ $mdified = null])</code>
       </tr>
           <tr>
         <td class="type"><a href="../default/Carbon.html">Carbon</a>|null&nbsp;&nbsp;</td>
-        <td><b>$mdified</b>&nbsp;&nbsp;</td>
+        <td><b>$modified</b>&nbsp;&nbsp;</td>
         <td>更新日時</td>
+      </tr>
+          <tr>
+        <td class="type">&nbsp;&nbsp;</td>
+        <td><b>$deleted</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodaddNewTask"></a>
+	<h3>method addNewTask <span class="smalllinenumber">[line 251]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void addNewTask(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		新しいTaskとして自身のインスタンスの情報をデータベースに追加します。<br /><br /><p>データベースに追加する条件を満たしていなければ例外をスローします。</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+
+
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodcanAddToDatabase"></a>
+	<h3>method canAddToDatabase <span class="smalllinenumber">[line 203]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>boolean canAddToDatabase(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		自身のインスタンスの情報をデータベースに追加することができるかどうかを確認します。<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>追加することができるならばtrueを返す</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>protected</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+
+
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodcanOverwriteToDatabase"></a>
+	<h3>method canOverwriteToDatabase <span class="smalllinenumber">[line 214]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>boolean canOverwriteToDatabase(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		自身のインスタンスの情報をデータベースに上書きすることができるかどうかを確認します。<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>上書きすることができるならばtrueを返す</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>protected</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+
+
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methoddelete"></a>
+	<h3>method delete <span class="smalllinenumber">[line 300]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void delete(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		自身のインスタンスに削除フラグを立てます。<br /><br /><p>このメソッドを実行しても直ちにデータベースに保存されることはありません。  overwriteToDatabase()メソッドを実行して上書きする必要があります。</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+
+
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methoddoesIdExist"></a>
+	<h3>method doesIdExist <span class="smalllinenumber">[line 234]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>bool doesIdExist(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		自身のインスタンスのIDがデータベース上に存在するかどうかを確認します。<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>存在したらtrueを返す</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>protected</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+
+
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodgetContent"></a>
+	<h3>method getContent <span class="smalllinenumber">[line 291]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string getContent(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		自身のインスタンスのcontentを取得します。<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>content</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+
+
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodoverwriteToDatabase"></a>
+	<h3>method overwriteToDatabase <span class="smalllinenumber">[line 268]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void overwriteToDatabase(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		データベースにある既存のtaskを上書きします。<br /><br /><p>上書きできる条件を満たしていなければ例外をスローします。</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+
+
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodsetContent"></a>
+	<h3>method setContent <span class="smalllinenumber">[line 283]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void setContent(
+string
+$content)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		自身のインスタンスのcontentに文字列をsetします。<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+
+
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$content</b>&nbsp;&nbsp;</td>
+        <td>setする文字列</td>
       </tr>
         </table>
     </div><br />
@@ -575,7 +945,7 @@ $mdified = null])</code>
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Fri, 22 Jan 2016 01:08:00 +0900 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.4</a>
+		    Documentation generated on Fri, 05 Feb 2016 01:21:47 +0900 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.4</a>
 	      </div>
       </td></tr></table>
     </td>

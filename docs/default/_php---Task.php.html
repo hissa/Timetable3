@@ -38,16 +38,21 @@
 		</a><br>
 			<a href="../default/_php---Task.php.html">		Task.php
 		</a><br>
+			<a href="../default/_php---Timetable.php.html">		Timetable.php
+		</a><br>
 	  </div><br />
       
       
             <b>Classes:</b><br />
         <div class="package">
 		    		<a href="../default/Carbon.html">Carbon</a><br />
+	    		<a href="../default/ClassInfo.html">ClassInfo</a><br />
 	    		<a href="../default/Config.html">Config</a><br />
 	    		<a href="../default/Database.html">Database</a><br />
 	    		<a href="../default/Subject.html">Subject</a><br />
 	    		<a href="../default/Task.html">Task</a><br />
+	    		<a href="../default/Timetable.html">Timetable</a><br />
+	    		<a href="../default/TimetableCarbon.html">TimetableCarbon</a><br />
 	  </div>
                 </td>
     <td>
@@ -73,14 +78,237 @@ Source Location: /php/Task.php<br /><br />
 <div class="tags">
 require_once(<a href="../default/_php---Database.php.html">"Database.php"</a>) [line 2]<br />
 require_once(<a href="../default/_php---Carbon.php.html">"Carbon.php"</a>) [line 3]<br />
+require_once(<a href="../default/_php---Config.php.html">"Config.php"</a>) [line 4]<br />
 </div>
 <br /><br />
 <br /><br />
 <br />
+  <hr />
+	<a name="functiondoesIdExist"></a>
+	<h3>doesIdExist <span class="smalllinenumber">[line 373]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>boolean doesIdExist(
+int $id)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+
+		指定されたidが存在するかどうかを確認する<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>存在する場合はtrueを返します。</td>
+  </tr>
+</table>
+</div>
+    <br /><br />
+	
+
+    		<h4>Parameters</h4>
+    <table border="0" cellspacing="0" cellpadding="0">
+		      <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$id</b>&nbsp;&nbsp;</td>
+        <td>教科id</td>
+      </tr>
+				</table>
+    	<div class="top">[ <a href="#top">Top</a> ]</div><br /><br />
+	</div>
+  <hr />
+	<a name="functionfetchName"></a>
+	<h3>fetchName <span class="smalllinenumber">[line 388]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string fetchName(
+ $id, int $subjectId)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+
+		教科idから教科名を取得します。<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>教科名</td>
+  </tr>
+</table>
+</div>
+    <br /><br />
+	
+
+    		<h4>Parameters</h4>
+    <table border="0" cellspacing="0" cellpadding="0">
+		      <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$subjectId</b>&nbsp;&nbsp;</td>
+        <td>教科id</td>
+      </tr>
+		      <tr>
+        <td class="type">&nbsp;&nbsp;</td>
+        <td><b>$id</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+				</table>
+    	<div class="top">[ <a href="#top">Top</a> ]</div><br /><br />
+	</div>
+  <hr />
+	<a name="functionfetchSchedule"></a>
+	<h3>fetchSchedule <span class="smalllinenumber">[line 443]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code><a href="../default/Subject.html">Subject</a> fetchSchedule(
+int $dayOfWeek, int $classNum)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+
+		曜日とコマ数目を指定して教科を取得します。<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>教科</td>
+  </tr>
+</table>
+</div>
+    <br /><br />
+	
+
+    		<h4>Parameters</h4>
+    <table border="0" cellspacing="0" cellpadding="0">
+		      <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$dayOfWeek</b>&nbsp;&nbsp;</td>
+        <td>曜日</td>
+      </tr>
+		      <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$classNum</b>&nbsp;&nbsp;</td>
+        <td>コマ数目</td>
+      </tr>
+				</table>
+    	<div class="top">[ <a href="#top">Top</a> ]</div><br /><br />
+	</div>
+  <hr />
+	<a name="functionfetchShortName"></a>
+	<h3>fetchShortName <span class="smalllinenumber">[line 403]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string fetchShortName(
+ $id, int $subjectId)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+
+		教科idから短縮教科名を取得します。<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>短縮教科名</td>
+  </tr>
+</table>
+</div>
+    <br /><br />
+	
+
+    		<h4>Parameters</h4>
+    <table border="0" cellspacing="0" cellpadding="0">
+		      <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$subjectId</b>&nbsp;&nbsp;</td>
+        <td>教科id</td>
+      </tr>
+		      <tr>
+        <td class="type">&nbsp;&nbsp;</td>
+        <td><b>$id</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+				</table>
+    	<div class="top">[ <a href="#top">Top</a> ]</div><br /><br />
+	</div>
+  <hr />
+	<a name="functiongetId"></a>
+	<h3>getId <span class="smalllinenumber">[line 433]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>int getId(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+
+		自身の教科idを取得します。<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>教科id</td>
+  </tr>
+</table>
+</div>
+    <br /><br />
+	
+
+    	<div class="top">[ <a href="#top">Top</a> ]</div><br /><br />
+	</div>
+  <hr />
+	<a name="functiongetName"></a>
+	<h3>getName <span class="smalllinenumber">[line 417]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string getName(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+
+		自身の教科名を取得します。<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>教科名</td>
+  </tr>
+</table>
+</div>
+    <br /><br />
+	
+
+    	<div class="top">[ <a href="#top">Top</a> ]</div><br /><br />
+	</div>
+  <hr />
+	<a name="functiongetShortName"></a>
+	<h3>getShortName <span class="smalllinenumber">[line 425]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string getShortName(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+
+		自身の短縮教科名を取得します。<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>短縮教科名</td>
+  </tr>
+</table>
+</div>
+    <br /><br />
+	
+
+    	<div class="top">[ <a href="#top">Top</a> ]</div><br /><br />
+	</div>
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Fri, 22 Jan 2016 01:08:00 +0900 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.4</a>
+		    Documentation generated on Fri, 05 Feb 2016 01:21:47 +0900 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.4</a>
 	      </div>
       </td></tr></table>
     </td>

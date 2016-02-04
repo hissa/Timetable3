@@ -38,16 +38,21 @@
 		</a><br>
 			<a href="../default/_php---Task.php.html">		Task.php
 		</a><br>
+			<a href="../default/_php---Timetable.php.html">		Timetable.php
+		</a><br>
 	  </div><br />
       
       
             <b>Classes:</b><br />
         <div class="package">
 		    		<a href="../default/Carbon.html">Carbon</a><br />
+	    		<a href="../default/ClassInfo.html">ClassInfo</a><br />
 	    		<a href="../default/Config.html">Config</a><br />
 	    		<a href="../default/Database.html">Database</a><br />
 	    		<a href="../default/Subject.html">Subject</a><br />
 	    		<a href="../default/Task.html">Task</a><br />
+	    		<a href="../default/Timetable.html">Timetable</a><br />
+	    		<a href="../default/TimetableCarbon.html">TimetableCarbon</a><br />
 	  </div>
                 </td>
     <td>
@@ -79,11 +84,7 @@ Source Location: /php/Config.php<br /><br />
 <h3><a href="#class_methods">Methods</a></h3>
 <ul>
     <li><a href="../default/Config.html#method__construct">__construct</a></li>
-    <li><a href="../default/Config.html#methodgetDbHost">getDbHost</a></li>
-    <li><a href="../default/Config.html#methodgetDbName">getDbName</a></li>
-    <li><a href="../default/Config.html#methodgetDbPass">getDbPass</a></li>
-    <li><a href="../default/Config.html#methodgetDbUser">getDbUser</a></li>
-    <li><a href="../default/Config.html#methodgetMode">getMode</a></li>
+    <li><a href="../default/Config.html#method__get">__get</a></li>
   </ul>
 </td>
 
@@ -116,13 +117,14 @@ Source Location: /php/Config.php<br /><br />
 
   <hr />
 	<a name="method__construct"></a>
-	<h3>constructor __construct <span class="smalllinenumber">[line 54]</span></h3>
+	<h3>constructor __construct <span class="smalllinenumber">[line 116]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
 		<code>null __construct(
 string
-$pass)</code>
+$mainPass, string
+$subPass)</code>
     </td></tr></table>
     </td></tr></table><br />
 	
@@ -145,30 +147,36 @@ $pass)</code>
     <table border="0" cellspacing="0" cellpadding="0">
           <tr>
         <td class="type">string&nbsp;&nbsp;</td>
-        <td><b>$pass</b>&nbsp;&nbsp;</td>
-        <td>configファイルのパス</td>
+        <td><b>$mainPass</b>&nbsp;&nbsp;</td>
+        <td>全体configファイルのパス</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$subPass</b>&nbsp;&nbsp;</td>
+        <td>個別configファイルのパス</td>
       </tr>
         </table>
     </div><br />
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
   <hr />
-	<a name="methodgetDbHost"></a>
-	<h3>method getDbHost <span class="smalllinenumber">[line 78]</span></h3>
+	<a name="method__get"></a>
+	<h3>method __get <span class="smalllinenumber">[line 191]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>string getDbHost(
-)</code>
+		<code>string __get(
+string
+$name)</code>
     </td></tr></table>
     </td></tr></table><br />
 	
-		データベースのホスト名を取得します。<br /><br /><br /><br />
+		ReadOnlyのアクセサ代わりの__getメソッドです。<br /><br /><p>直接インスタンスの変数にアクセスしようとするとこのメソッドが呼び出されます。</p><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><b>return:</b>&nbsp;&nbsp;</td><td>データベースのホスト名</td>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>アクセスしようとした変数の値</td>
   </tr>
   <tr>
     <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
@@ -180,126 +188,16 @@ $pass)</code>
 	
 
 
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="methodgetDbName"></a>
-	<h3>method getDbName <span class="smalllinenumber">[line 86]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>string getDbName(
-)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		データベース名を取得します。<br /><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><b>return:</b>&nbsp;&nbsp;</td><td>データベース名</td>
-  </tr>
-  <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
-  </tr>
-</table>
-</div>
-<br /><br />
-
-	
-
-
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="methodgetDbPass"></a>
-	<h3>method getDbPass <span class="smalllinenumber">[line 102]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>string getDbPass(
-)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		データベースのパスワードを取得します。<br /><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><b>return:</b>&nbsp;&nbsp;</td><td>データベースのパスワード</td>
-  </tr>
-  <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
-  </tr>
-</table>
-</div>
-<br /><br />
-
-	
-
-
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="methodgetDbUser"></a>
-	<h3>method getDbUser <span class="smalllinenumber">[line 94]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>string getDbUser(
-)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		データベースのユーザー名を取得します。<br /><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><b>return:</b>&nbsp;&nbsp;</td><td>データベースのユーザー名</td>
-  </tr>
-  <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
-  </tr>
-</table>
-</div>
-<br /><br />
-
-	
-
-
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="methodgetMode"></a>
-	<h3>method getMode <span class="smalllinenumber">[line 70]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>string getMode(
-)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Modeの設定値を取得します。<br /><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><b>return:</b>&nbsp;&nbsp;</td><td>Modeの設定値</td>
-  </tr>
-  <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
-  </tr>
-</table>
-</div>
-<br /><br />
-
-	
-
-
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$name</b>&nbsp;&nbsp;</td>
+        <td>アクセスしようとした変数名</td>
+      </tr>
+        </table>
+    </div><br />
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
 </div><br />
@@ -307,7 +205,7 @@ $pass)</code>
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Fri, 22 Jan 2016 01:08:00 +0900 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.4</a>
+		    Documentation generated on Fri, 05 Feb 2016 01:21:46 +0900 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.4</a>
 	      </div>
       </td></tr></table>
     </td>
