@@ -285,6 +285,14 @@ class Task{
     }
 
     /**
+     * 自身のインスタンスのcontentを取得します。
+     * @return string content
+     */
+    public function getContent(){
+        return $content;
+    }
+
+    /**
      * 自身のインスタンスに削除フラグを立てます。
      * このメソッドを実行しても直ちにデータベースに保存されることはありません。
      * overwriteToDatabase()メソッドを実行して上書きする必要があります。
