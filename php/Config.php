@@ -108,6 +108,12 @@ class Config{
     private $taskClassName;
 
     /**
+     * テーブルに適用するクラス名
+     * @var [type]
+     */
+    private $tableClassName;
+
+    /**
      * このクラスのコンストラクタです。
      * @param string 全体configファイルのパス
      * @param string 個別configファイルのパス
@@ -180,6 +186,9 @@ class Config{
         if(is_null($this->taskClassName = $config["taskClassName"])){
             $this->taskClassName = "task";
         }
+        if(is_null($this->tableClassName = $config["tableClassName"])){
+            $this->tableClassName = "";
+        }
     }
 
     /**
@@ -222,6 +231,8 @@ class Config{
                 return $this->todayClassName;
             case "taskClassName":
                 return $this->taskClassName;
+            case "tableClassName":
+                return $this->tableClassName;
             default:
                 throw new Exception("存在しない変数がアクセスされました。");
         }

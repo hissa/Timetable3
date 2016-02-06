@@ -4,7 +4,6 @@ require_once "Carbon.php";
 require_once "Config.php";
 require_once "Task.php";
 use Carbon\Carbon;
-$SETTINGS = new Config("../config.ini", "../timetable1.ini");
 
 
 
@@ -76,8 +75,9 @@ class Timetable{
      * @return string         生成したhtml
      */
     public function create($period){
+        global $SETTINGS;
         $this->html = "";
-        $this->html .= "<table>";
+        $this->html .= "<table class=\"".$SETTINGS->tableClassName."\">";
         if($period == 0){
             $dayOfWeek = TimetableCarbon::now()->addWeeks($period)
                                                ->startOfWeek();
@@ -93,7 +93,7 @@ class Timetable{
                     $this->html .= $this->sideHead[$i];
                     $this->html .= "</th>";
                 }else{
-                    $this->html .= $this->infos[$period][$j - 1][$i]
+                    $this->html .= $this->infos[$period][$i][$j - 1]
                                         ->getHtml();
                 }
             }
@@ -125,11 +125,12 @@ class Timetable{
      */
     protected function setClassInfoOneWeek($date){
         $date = $date->startOfWeek();
-        for($i = 0; $i <= 4; $i++){
-            for($j = 0; $j <= 2; $j++){
-                $subject = Subject::fetchSchedule($i + 1, $j + 1);
-                $infos[$i][$j] = new ClassInfo($date->addDays($i + 1),
-                                             $i + 1, $subject);
+        for($i = 0; $i <= 2; $i++){
+            for($j = 0; $j <= 4; $j++){
+                $date = $date->startOfWeek();
+                $subject = Subject::fetchSchedule($j + 1, $i + 1);
+                $infos[$i][$j] = new ClassInfo($date->addDays($j),
+                                             $j, $subject);
             }
         }
         return $infos;
@@ -215,7 +216,7 @@ class ClassInfo{
         $this->classNum = $classNum;
         $this->subject = $subject;
         $this->html = "";
-        $task = Task::fetchTask($date, $subject);
+        $this->task = Task::fetchTask($date, $subject);
         $this->createHtml();
     }
 
@@ -245,20 +246,21 @@ class ClassInfo{
     protected function createHtml(){
         global $SETTINGS;
         $html = "";
-        if(!is_null($this->task) && TimetableCarbon::today()->isToday($this->date)){
+        if(!is_null($this->task) && $this->date->isToday()){
             $html .= "<td class=\"".$SETTINGS->todayClassName." ".
                     $SETTINGS->taskClassName."\">";
         }else if(!is_null($this->task)){
             $html .= "<td class=\"".$SETTINGS->taskClassName."\">";
-        }else if(TimetableCarbon::today()->isToday($this->date)){
+        }else if($this->date->isToday()){
             $html .= "<td class=\"".$SETTINGS->todayClassName."\">";
+        }else{
+            $html .= "<td>";
         }
-
         if(!is_null($this->task)){
-            $html .= "<span class=\"glyphicon glyphicon-tag aria-hidden=\"true\">";
+            $html .= "<span class=\"glyphicon glyphicon-tag aria-hidden=\"true\"></span>";
         }
 
-        $html .= $this->subject->getName();
+        $html .= $this->subject->getShortName();
 
         $html .= "</td>";
         $this->html .= $html;

@@ -3,7 +3,7 @@ require_once "Database.php";
 require_once "Carbon.php";
 require_once "Config.php";
 use Carbon\Carbon;
-$SETTINGS = new Config("../config.ini", "../timetable1.ini");
+
 
 /**
  * 課題についての情報を扱うクラスです。
@@ -289,7 +289,7 @@ class Task{
      * @return string content
      */
     public function getContent(){
-        return $content;
+        return $this->content;
     }
 
     /**
