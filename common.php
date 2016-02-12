@@ -12,5 +12,7 @@
 <?php
 error_reporting(E_ALL & ~E_NOTICE);
 require_once "./php/Config.php";
+require_once "./php/Carbon.php";
+use Carbon\Carbon;
 require_once "./php/Timetable.php";
 ?>

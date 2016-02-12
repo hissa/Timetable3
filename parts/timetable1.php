@@ -28,7 +28,12 @@ $table = new Timetable();
         }else{
             echo "<div class=\"tab-pane\" id=\"table".$i."\">";
         }
+        echo "<p>";
         echo $table->create($i);
+        echo "</p>";
+        echo "<p>";
+        echo $table->createContentList($i);
+        echo "</p>";
         echo "</div>";
     }
     ?>

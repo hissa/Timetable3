@@ -79,9 +79,10 @@ class Timetable{
         $this->html = "";
         $this->html .= "<table class=\"".$SETTINGS->tableClassName."\">";
         if($period == 0){
-            $dayOfWeek = TimetableCarbon::now()->addWeeks($period)
-                                               ->startOfWeek();
-            $this->createHead($dayOfWeek->dayOfWeek);
+            $startOfWeek = TimetableCarbon::now()->addWeeks($period)
+                                                 ->startOfWeek();
+            $dayOfWeek = TimetableCarbon::now()->dayOfWeek;
+            $this->createHead($dayOfWeek);
         }else{
             $this->createHead();
         }
@@ -161,6 +162,52 @@ class Timetable{
         $this->html .= $html;
     }
 
+    /**
+     * 課題詳細一覧のヘッダーを生成します。
+     */
+    protected static function createContentListHead(){
+        $html = "";
+        $html .= "<thead>";
+        $html .= "<tr>";
+        $html .= "<th>";
+        $html .= "曜日";
+        $html .= "</th>";
+        $html .= "<th>";
+        $html .= "教科";
+        $html .= "</th>";
+        $html .= "<th>";
+        $html .= "詳細";
+        $html .= "</th>";
+        $html .= "</tr>";
+        $html .= "</thead>";
+
+        return $html;
+    }
+
+    /**
+     * 課題詳細一覧を生成します
+     * @param  int $period 期間
+     */
+    public function createContentList($period){
+        global $SETTINGS;
+        $this->html = "";
+        $html = "";
+        $html .= "<table class=\"".$SETTINGS->tableClassName."\">";
+        $html .= static::createContentListHead();
+        $i = 0;
+        $iMax = count($this->infos[$period]);
+        $jMax = count($this->infos[$peropd][0]);
+        for($j = 0; $j < $jMax; $j++){
+            for($i = 0; $i < $iMax; $i++){
+                if($this->infos[$period][$i][$j]){
+                    $html .= $this->infos[$period][$i][$j]->getContentHtml();
+                }
+            }
+        }
+        $html .= "</table>";
+        return $html;
+    }
+
 }
 
 /**
@@ -200,6 +247,12 @@ class ClassInfo{
     protected $html;
 
     /**
+     * 課題詳細一覧の行を表示するHTML
+     * @var string
+     */
+    protected $contentHtml;
+
+    /**
      * このクラスのコンストラクタです。
      * @param Carbon\Carbon $date 日付
      * @param int $classNum 授業コマ目
@@ -218,6 +271,7 @@ class ClassInfo{
         $this->html = "";
         $this->task = Task::fetchTask($date, $subject);
         $this->createHtml();
+        $this->createContentHtml();
     }
 
     /**
@@ -272,5 +326,61 @@ class ClassInfo{
      */
     public function getHtml(){
         return $this->html;
+    }
+
+    /**
+     * 課題詳細一覧表の行を生成します
+     */
+    protected function createContentHtml(){
+        global $SETTINGS;
+        $dayOfWeekName = ["日", "月", "火", "水", "木", "金", "土"];
+        if(is_null($this->task)){
+            $this->contentHtml = null;
+            return;
+        }
+        if(is_null($this->task->getContent())){
+            $this->contentHtml = null;
+            return;
+        }
+        $html = "";
+        if($this->date->isToday()){
+            $html .= "<tr class=\"".$SETTINGS->todayClassName."\">";
+        }else{
+            $html .= "<tr>";
+        }
+        $html .= "<td>";
+        $html .= $dayOfWeekName[$this->date->dayOfWeek];
+        $html .= "</td>";
+        $html .= "<td>";
+        $html .= $this->subject->getShortName();
+        $html .= "</td>";
+        $html .= "<td>";
+        $html .= $this->task->getContent();
+        $html .= "</td>";
+        $html .= "</tr>";
+
+        $this->contentHtml = $html;
+    }
+
+    /**
+     * 課題詳細一覧の行を取得します。
+     * @return string 行のhtml
+     */
+    public function getContentHtml(){
+        return $this->contentHtml;
+    }
+
+    /**
+     * 自身のインスタンスのtaskのContentが存在するかどうかを返します。
+     * @return bool 存在していればtrueを返す
+     */
+    public function doesContentExist(){
+        if(is_null($this->task)){
+            return false;
+        }
+        if(is_null($this->task->getContent())){
+            return false;
+        }
+        return true;
     }
 }

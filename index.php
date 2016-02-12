@@ -2,6 +2,7 @@
 <html lang="ja">
     <head>
         <?php include "./common.php"; ?>
+        <?php TimetableCarbon::setTestNow(TimetableCarbon::parse("2016/2/8")) ?>
     </head>
     <body>
         <?php include "./parts/header.html"; ?>
