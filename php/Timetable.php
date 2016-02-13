@@ -196,7 +196,7 @@ class Timetable{
         $html .= static::createContentListHead();
         $i = 0;
         $iMax = count($this->infos[$period]);
-        $jMax = count($this->infos[$peropd][0]);
+        $jMax = count($this->infos[$period][0]);
         for($j = 0; $j < $jMax; $j++){
             for($i = 0; $i < $iMax; $i++){
                 if($this->infos[$period][$i][$j]){
