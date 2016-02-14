@@ -68,6 +68,9 @@ class Administrator{
      * @return Administrator     情報を持つインスタンス
      */
     public static function fetch($id){
+        if(!static::doesIdExist($id)){
+            throw new Exception("指定されたIDが存在しません。");
+        }
         $name = static::fetchName($id);
         $grade = intval(static::fetchGrade($id));
         $hashedPassword = static::fetchHashedPassword($id);
@@ -230,6 +233,131 @@ class Administrator{
         $db->query($sql);
     }
 
+    /**
+     * 自身のインスタンスの情報をデータベースに登録します。
+     */
+    public function add(){
+        if(!static::canAdd()){
+            throw new Exception("情報を追加できる条件が整っていません。");
+        }
+        $grade = is_null($this->grade) ? "null" : $this->grade;
+        $db = new Database();
+        $sql = "insert into ".
+                "administrators(name,grade,hashed_password,permission_level)".
+                " values(?, ?, ?, ?);";
+        $stmt = $db->prepare($sql);
+        $db->execute($stmt, [$this->name, $grade, $this->hashedPassword,
+                             $this->permissionLevel], false);
+    }
+
+    /**
+     * 自身のインスタンスの管理者情報を追加できるかどうかを確認する。
+     * @return bool 追加できるならばtrueを返す
+     */
+    public function canAdd(){
+        if(!is_null($this->id)){
+            return false;
+        }
+        if(static::doesNameExist($this->name)){
+            return false;
+        }
+        if(is_null($this->hashedPassword)){
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 管理者名が既に存在するかどうかを確認します。
+     * @param  string $name 管理者名
+     * @return bool       存在していればtrueを返す
+     */
+    protected static function doesNameExist($name){
+        $db = new Database();
+        $sql = "select exists(select id from administrators where name=?);";
+        $stmt = $db->prepare($sql);
+        $result = $db->execute($stmt, [$name]);
+        return $result[0][0];
+    }
+
+    /**
+     * 管理者名から管理者IDを検索します。
+     * @param  string $name 管理者名
+     * @return int       管理者ID
+     */
+    protected static function searchName($name){
+        $db = new Database();
+        $sql = "select id from administrators where name=?;";
+        $stmt = $db->prepare($sql);
+        $result = $db->execute($stmt, [$name]);
+        return $result;
+    }
+
+    /**
+     * 管理者名とパスワードを指定してログインします
+     * @param  string $name 管理者名
+     * @param  string $pass パスワード
+     * @return Administrator       ログインされた管理者のインスタンス
+     */
+    public static function loginFromName($name, $pass){
+        $id = static::searchName($name);
+        return static::loginFromId($id, $pass);
+    }
+
+    /**
+     * 管理者IDとパスワードを指定してログインします。
+     * @param  int $id   管理者ID
+     * @param  string $pass パスワード
+     * @return Administrator       ログインされたインスタンス
+     */
+    public static function loginFromId($id, $pass){
+        if(!static::doesIdExist($id)){
+            throw new Exception("指定されたIDが存在しません。");
+        }
+        $admin = static::fetch($id);
+        $admin->login($pass);
+        return $admin;
+    }
+
+    /**
+     * 指定されたIDが存在するかどうかを返します。
+     * @param  int $id 管理者ID
+     * @return bool     存在すればtrueを返す
+     */
+    protected static function doesIdExist($id){
+        $id = intval($id);
+        $db = new Database();
+        $sql = "select exsists(select id from administrators where id=?);";
+        $stmt = $db->prepare($sql);
+        $result = $db->execute($stmt, [$id]);
+        return $result[0][0];
+    }
+
+    /**
+     * セッションからログインします。
+     * @return Administrator ログイン済みのインスタンス
+     */
+    public static function loginFromSession(){
+        if(!static::canLoginFromSession()){
+            throw new Exception("ログインに必要な情報が存在しません。");
+        }
+        return static::loginFromId($_SESSION["id"], $_SESSION["password"]);
+    }
+
+    /**
+     * セッションからログインする準備が整っているかを確認します。
+     * @return bool 整っていればtrueを返す
+     */
+    public static function canLoginFromSession(){
+        if(!$_SESSION["id"]){
+            return false;
+        }
+        if(!$_SESSION["password"]){
+            return false;
+        }
+        return true;
+    }
+
 }
 //
 // $SETTINGS = new Config("../config.ini", "../timetable1.ini");
@@ -237,3 +365,5 @@ class Administrator{
 // $admin->name = "hissatest";
 // $admin->update();
 // var_dump($admin);
+// $admin = Administrator::create("hissa2", 0, "test2", 1);
+// $admin->add();
