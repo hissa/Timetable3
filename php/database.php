@@ -56,4 +56,27 @@ class Database{
         }
         return $result;
     }
+
+    /**
+     * プレースホルダを使用するクエリの準備をします。
+     * @param  string $sql SQL文
+     * @return PDOStatement      PDOステートメント
+     */
+    public function prepare($sql){
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt;
+    }
+
+    /**
+     * prepareで作成したStatementを実行、fetchします。
+     * @param  PDOStatement $stmt  PDOステートメント
+     * @param  array() $param パラメータが配列で格納されたもの
+     * @return string[][]        結果
+     */
+    public function  execute($stmt, $param, $fetch = true){
+        $stmt->execute($param);
+        if($fetch){
+            return static::encode($stmt);
+        }
+    }
 }
