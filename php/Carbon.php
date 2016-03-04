@@ -561,7 +561,7 @@ class Carbon extends DateTime
     {
         try {
             $this->__get($name);
-        } catch (InvalidArgumentException $e) {
+        } catch(InvalidArgumentException $e) {
             return false;
         }
 

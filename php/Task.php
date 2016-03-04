@@ -63,19 +63,19 @@ class Task{
                                 $modified = null, $deleted = null
                                 ){
         // 決まった型かnullに当てはまらない場合は処理を中断します。
-        if(gettype($id) !== "integer" && !is_null($id)){
+        if (gettype($id) !== "integer" && !is_null($id)){
             throw new Exception("idはintで指定してください。");
         }
-        if(is_a($date, "Carbon\Carbon") !== true && !is_null($date)){
+        if (is_a($date, "Carbon\Carbon") !== true && !is_null($date)){
             throw new Exception("dateはCarbonクラスのインスタンスで指定してください。");
         }
-        if(get_class($subject) !== "Subject" && !is_null($subject)){
+        if (get_class($subject) !== "Subject" && !is_null($subject)){
             throw new Exception("subjectはSubjectクラスのインスタンスで指定してください。");
         }
-        if(gettype($content) !== "string" && !is_null($content)){
+        if (gettype($content) !== "string" && !is_null($content)){
             throw new Exception("contentはstringで指定してください。");
         }
-        if(is_a($date, "Carbon\Carbon") !== true && !is_null($modified)){
+        if (is_a($date, "Carbon\Carbon") !== true && !is_null($modified)){
             throw new Exception("modifiedはCarbonクラスのインスタンスで指定してください。");
         }
         $this->id = $id;
@@ -92,7 +92,7 @@ class Task{
      * @return Task     取得した情報を格納したTaskクラスのインスタンス
      */
     public static function fetch($id){
-        if(gettype($id) !== "integer"){
+        if (gettype($id) !== "integer"){
             throw new Exception("idはintで指定してください。");
         }
         $date = static::fetchDate($id);
@@ -111,17 +111,17 @@ class Task{
      * @return Task          作成されたインスタンス
      */
     public static function create($date, $subject, $content){
-        if(is_a($date, "Carbon\Carbon") !== true){
+        if (is_a($date, "Carbon\Carbon") !== true){
             throw new Exception("dateがCarbonクラスのインスタンスではありません。");
         }
-        if(gettype($subject) === "integer"){
+        if (gettype($subject) === "integer"){
             // $subjectがidで渡された場合
             $subject = new Subject($subject);
         }
-        if(get_class($subject) !== "Subject"){
+        if (get_class($subject) !== "Subject"){
             throw new Exception("subjectが整数またはSubjectクラスのインスタンスではありません。");
         }
-        if(gettype($content) !== "string"){
+        if (gettype($content) !== "string"){
             throw new Exception("contentはstringで指定してください。");
         }
         return new self(null, $date, $subject, $content, null);
@@ -201,7 +201,7 @@ class Task{
      * @return boolean 追加することができるならばtrueを返す
      */
     protected function canAddToDatabase(){
-        if($this->doesIdExist()){
+        if ($this->doesIdExist()){
             return false;
         }
         return true;
@@ -215,13 +215,13 @@ class Task{
         global $SETTINGS;
         $db = new Database();
         $idExists = $this->doesIdExist();
-        if(!$idExists){
+        if (!$idExists){
             return false;
         }
         $dbDate = static::fetchDate($this->id);
         $thisDate = $this->date;
         $dateEqual = $dbDate->eq($thisDate);
-        if(!$dateEqual){
+        if (!$dateEqual){
             return false;
         }
         return true;
@@ -232,7 +232,7 @@ class Task{
      * @return bool 存在したらtrueを返す
      */
     protected function doesIdExist(){
-        if(is_null($this->id)){
+        if (is_null($this->id)){
             return false;
         }
         global $SETTINGS;
@@ -250,7 +250,7 @@ class Task{
      */
     public function addNewTask(){
         global $SETTINGS;
-        if(!$this->canAddToDatabase()){
+        if (!$this->canAddToDatabase()){
             throw new Exception("データベースに追加できる条件を満たしていません。");
         }
         $db = new Database();
@@ -267,7 +267,7 @@ class Task{
      */
     public function overwriteToDatabase(){
         global $SETTINGS;
-        if(!$this->canOverwriteToDatabase()){
+        if (!$this->canOverwriteToDatabase()){
             throw new Exception("データベースに上書きする条件を満たしていません。");
         }
         $db = new Database();
@@ -317,9 +317,9 @@ class Task{
                 " deleted=0;";
         $stmt = $db->query($sql);
         $result = Database::encode($stmt);
-        if($result[0][0]){
+        if ($result[0][0]){
             return static::fetch(intval($result[0][0]));
-        }else{
+        } else {
             return null;
         }
     }
@@ -354,10 +354,10 @@ class Subject{
      * @param int $id 教科id
      */
     public function __construct($id){
-        if(gettype($id) !== "integer"){
+        if (gettype($id) !== "integer"){
             throw new Exception("idはintで指定してください。");
         }
-        if(!static::doesIdExist($id)){
+        if (!static::doesIdExist($id)){
             throw new Exception("指定された教科idは存在しない可能性があります。");
         }
         $this->id = $id;

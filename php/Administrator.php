@@ -44,7 +44,7 @@ class Administrator{
      * ログインされているかどうか
      * @var bool
      */
-    protected $logined;
+    protected $loggedIn;
 
     /**
      * コンストラクタ
@@ -68,7 +68,7 @@ class Administrator{
      * @return Administrator     情報を持つインスタンス
      */
     public static function fetch($id){
-        if(!static::doesIdExist($id)){
+        if (!static::doesIdExist($id)){
             throw new Exception("指定されたIDが存在しません。");
         }
         $name = static::fetchName($id);
@@ -99,10 +99,10 @@ class Administrator{
      * @return bool           ログイン成功した場合にtrueを返す。
      */
     public function login($password){
-        if(!password_verify($password, $this->hashedPassword)){
+        if (!password_verify($password, $this->hashedPassword)){
             throw new Exception("ログインに失敗しました。");
         }
-        $this->logined = true;
+        $this->loggedIn = true;
         return true;
     }
 
@@ -122,7 +122,7 @@ class Administrator{
      * @return anyType       変数の値
      */
     public function __get($name){
-        switch($name){
+        switch ($name){
             case "id":
                 return $this->id;
             case "name":
@@ -145,7 +145,7 @@ class Administrator{
      * @param anyType $value 代入する値
      */
     public function __set($name, $value){
-        switch($name){
+        switch ($name){
             case "name":
                 $this->name = $value;
                 break;
@@ -221,7 +221,7 @@ class Administrator{
      * 管理者情報を更新します。
      */
     public function update(){
-        if(is_null($this->id)){
+        if (is_null($this->id)){
             throw new Exception("管理者情報を上書きするためにはIDが必要です。");
         }
         $db = new Database();
@@ -237,7 +237,7 @@ class Administrator{
      * 自身のインスタンスの情報をデータベースに登録します。
      */
     public function add(){
-        if(!static::canAdd()){
+        if (!static::canAdd()){
             throw new Exception("情報を追加できる条件が整っていません。");
         }
         $grade = is_null($this->grade) ? "null" : $this->grade;
@@ -255,13 +255,13 @@ class Administrator{
      * @return bool 追加できるならばtrueを返す
      */
     public function canAdd(){
-        if(!is_null($this->id)){
+        if (!is_null($this->id)){
             return false;
         }
-        if(static::doesNameExist($this->name)){
+        if (static::doesNameExist($this->name)){
             return false;
         }
-        if(is_null($this->hashedPassword)){
+        if (is_null($this->hashedPassword)){
             return false;
         }
         return true;
@@ -290,7 +290,10 @@ class Administrator{
         $sql = "select id from administrators where name=?;";
         $stmt = $db->prepare($sql);
         $result = $db->execute($stmt, [$name]);
-        return $result;
+        if (!($result[0])){
+            throw new Exception("管理者名が見つかりませんでした。");
+        }
+        return (int)$result[0][0];
     }
 
     /**
@@ -311,7 +314,7 @@ class Administrator{
      * @return Administrator       ログインされたインスタンス
      */
     public static function loginFromId($id, $pass){
-        if(!static::doesIdExist($id)){
+        if (!static::doesIdExist($id)){
             throw new Exception("指定されたIDが存在しません。");
         }
         $admin = static::fetch($id);
@@ -327,7 +330,7 @@ class Administrator{
     protected static function doesIdExist($id){
         $id = intval($id);
         $db = new Database();
-        $sql = "select exsists(select id from administrators where id=?);";
+        $sql = "select exists(select id from administrators where id=?);";
         $stmt = $db->prepare($sql);
         $result = $db->execute($stmt, [$id]);
         return $result[0][0];
@@ -337,25 +340,44 @@ class Administrator{
      * セッションからログインします。
      * @return Administrator ログイン済みのインスタンス
      */
-    public static function loginFromSession(){
-        if(!static::canLoginFromSession()){
+    public static function loginUsingSession(){
+        if (!static::canLoginUsingSession()){
             throw new Exception("ログインに必要な情報が存在しません。");
         }
-        return static::loginFromId($_SESSION["id"], $_SESSION["password"]);
+        return static::loginFromName($_SESSION["name"], $_SESSION["password"]);
     }
 
     /**
      * セッションからログインする準備が整っているかを確認します。
      * @return bool 整っていればtrueを返す
      */
-    public static function canLoginFromSession(){
-        if(!$_SESSION["id"]){
+    protected static function canLoginUsingSession(){
+        if (!isset($_SESSION["name"])){
             return false;
         }
-        if(!$_SESSION["password"]){
+        if (!isset($_SESSION["password"])){
             return false;
         }
         return true;
+    }
+
+    /**
+     * セッションのログイン情報を削除します。
+     */
+    public static function sessionLogout(){
+        $_SESSION = [];
+        if (isset($_COOKIE[session_name()])){
+            setcookie(session_name(), "", time() - 1800, "/");
+        }
+        @session_destroy();
+    }
+
+    /**
+     * ログインされているかどうか
+     * @return boolean されていればtrueを返す
+     */
+    public function isLoggedIn(){
+        return $this->loggedIn == true ? true : false;
     }
 
 }

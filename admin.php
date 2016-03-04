@@ -8,7 +8,7 @@
         <?php include "./parts/header.html"; ?>
         <div class="container">
             <?php
-            switch($_GET["page"]){
+            switch ($_GET["page"]){
                 case null:
                     include "./parts/toppage.php";
                     break;

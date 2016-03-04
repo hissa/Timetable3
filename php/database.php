@@ -11,7 +11,7 @@ class Database{
      */
     public function  __construct(){
         global $SETTINGS;
-        if(is_null($SETTINGS)){
+        if (is_null($SETTINGS)){
             throw new Exception("設定ファイルを読み込むことができませんでした。");
         }
         $dbname = $SETTINGS->dbName;
@@ -20,12 +20,12 @@ class Database{
         $user = $SETTINGS->dbUser;
         $pass = $SETTINGS->dbPass;
 
-        try{
+        try {
             $this->pdo = new PDO($dsn, $user, $pass);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
             $this->pdo->query("use ".$dbname);
             $this->pdo->query("SET NAMES utf8");
-        }catch(Exception $e){
+        } catch (Exception $e){
             echo "Error:".$e->getMessage();
         }
     }
@@ -36,9 +36,9 @@ class Database{
      * @return instance      返されたPDOステートメントオブジェクト
      */
     public function query($sql){
-        try{
+        try {
             $stmt = $this->pdo->query($sql);
-        }catch(Exception $e){
+        } catch (Exception $e){
             echo "Error:".$e->getMessage();
         }
         return $stmt;
@@ -51,7 +51,7 @@ class Database{
      */
     public static function encode($stmt){
         $count = 0;
-        while($result[$count] = $stmt->fetch(PDO::FETCH_BOTH)){
+        while ($result[$count] = $stmt->fetch(PDO::FETCH_BOTH)){
             $count++;
         }
         return $result;
@@ -73,9 +73,9 @@ class Database{
      * @param  array() $param パラメータが配列で格納されたもの
      * @return string[][]        結果
      */
-    public function  execute($stmt, $param, $fetch = true){
+    public function execute($stmt, $param, $fetch = true){
         $stmt->execute($param);
-        if($fetch){
+        if ($fetch){
             return static::encode($stmt);
         }
     }

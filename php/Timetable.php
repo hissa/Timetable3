@@ -16,13 +16,13 @@ class TimetableCarbon extends Carbon{
     public function __construct($time = null, $tz = null){
         parent::__construct($time, $tz);
 
-        if($this->hour >= 15){
+        if ($this->hour >= 15){
             $this->addDay();
         }
-        if($this->dayOfWeek === 0){
+        if ($this->dayOfWeek === 0){
             $this->addDay();
         }
-        if($this->dayOfWeek === 6){
+        if ($this->dayOfWeek === 6){
             $this->addDays(2);
         }
     }
@@ -78,22 +78,22 @@ class Timetable{
         global $SETTINGS;
         $this->html = "";
         $this->html .= "<table class=\"".$SETTINGS->tableClassName."\">";
-        if($period == 0){
+        if ($period == 0){
             $startOfWeek = TimetableCarbon::now()->addWeeks($period)
                                                  ->startOfWeek();
             $dayOfWeek = TimetableCarbon::now()->dayOfWeek;
             $this->createHead($dayOfWeek);
-        }else{
+        } else {
             $this->createHead();
         }
-        for($i = 0; $i <= 2; $i++){
+        for ($i = 0; $i <= 2; $i++){
             $this->html .= "<tr>";
-            for($j = 0; $j <= 5; $j++){
-                if($j == 0){
+            for ($j = 0; $j <= 5; $j++){
+                if ($j == 0){
                     $this->html .= "<th>";
                     $this->html .= $this->sideHead[$i];
                     $this->html .= "</th>";
-                }else{
+                } else {
                     $this->html .= $this->infos[$period][$i][$j - 1]
                                         ->getHtml();
                 }
@@ -111,7 +111,7 @@ class Timetable{
         global $SETTINGS;
         $start = explode(",", $SETTINGS->showPeriodWeek)[0];
         $end = explode(",", $SETTINGS->showPeriodWeek)[1];
-        for($i = $start; $i <= $end; $i++){
+        for ($i = $start; $i <= $end; $i++){
             $week = TimetableCarbon::now()
                                         ->addWeeks($i)
                                         ->startOfWeek();
@@ -126,8 +126,8 @@ class Timetable{
      */
     protected function setClassInfoOneWeek($date){
         $date = $date->startOfWeek();
-        for($i = 0; $i <= 2; $i++){
-            for($j = 0; $j <= 4; $j++){
+        for ($i = 0; $i <= 2; $i++){
+            for ($j = 0; $j <= 4; $j++){
                 $date = $date->startOfWeek();
                 $subject = Subject::fetchSchedule($j + 1, $i + 1);
                 $infos[$i][$j] = new ClassInfo($date->addDays($j),
@@ -145,13 +145,13 @@ class Timetable{
         $html = "";
         $html .= "<thead>";
         $html .= "<tr>";
-        for($i = 0; $i <= 5; $i++){
-            if($dayOfWeek == $i){
+        for ($i = 0; $i <= 5; $i++){
+            if ($dayOfWeek == $i){
                 $html .= "<th class=\"".$SETTINGS->todayClassName."\">";
-            }else{
+            } else {
                 $html .= "<th>";
             }
-            if($i != 0){
+            if ($i != 0){
                 $html .= $this->topHead[$i - 1];
             }
             $html .= "</th>";
@@ -197,9 +197,9 @@ class Timetable{
         $i = 0;
         $iMax = count($this->infos[$period]);
         $jMax = count($this->infos[$period][0]);
-        for($j = 0; $j < $jMax; $j++){
-            for($i = 0; $i < $iMax; $i++){
-                if($this->infos[$period][$i][$j]){
+        for ($j = 0; $j < $jMax; $j++){
+            for ($i = 0; $i < $iMax; $i++){
+                if ($this->infos[$period][$i][$j]){
                     $html .= $this->infos[$period][$i][$j]->getContentHtml();
                 }
             }
@@ -259,10 +259,10 @@ class ClassInfo{
      * @param Subject $subject 教科
      */
     public function __construct($date, $classNum, $subject){
-        if(is_subclass_of($date, "Carbon\Carbon") !== true){
+        if (is_subclass_of($date, "Carbon\Carbon") !== true){
             throw new Exception("dateはCarbonまたはTimetableCarbonで指定してください。");
         }
-        if(get_class($subject) !== "Subject"){
+        if (get_class($subject) !== "Subject"){
             throw new Exception("subjectはSubjectで指定してください。");
         }
         $this->date = $date;
@@ -280,7 +280,7 @@ class ClassInfo{
      * @return anyType       変数の値
      */
     public function __get($name){
-        switch($name){
+        switch ($name){
             case "date":
                 return $this->date;
             case "classNum":
@@ -300,18 +300,20 @@ class ClassInfo{
     protected function createHtml(){
         global $SETTINGS;
         $html = "";
-        if(!is_null($this->task) && $this->date->isToday()){
+        if (!is_null($this->task) && $this->date->isToday()){
             $html .= "<td class=\"".$SETTINGS->todayClassName." ".
                     $SETTINGS->taskClassName."\">";
-        }else if(!is_null($this->task)){
+        }else if (!is_null($this->task)){
             $html .= "<td class=\"".$SETTINGS->taskClassName."\">";
-        }else if($this->date->isToday()){
+        }else if ($this->date->isToday()){
             $html .= "<td class=\"".$SETTINGS->todayClassName."\">";
-        }else{
+        } else {
             $html .= "<td>";
         }
-        if(!is_null($this->task)){
-            $html .= "<span class=\"glyphicon glyphicon-tag aria-hidden=\"true\"></span>";
+        if (!is_null($this->task)){
+            if (!is_null($this->task->getContent())){
+                $html .= "<span class=\"glyphicon glyphicon-tag aria-hidden=\"true\"></span>";
+            }
         }
 
         $html .= $this->subject->getShortName();
@@ -334,18 +336,18 @@ class ClassInfo{
     protected function createContentHtml(){
         global $SETTINGS;
         $dayOfWeekName = ["日", "月", "火", "水", "木", "金", "土"];
-        if(is_null($this->task)){
+        if (is_null($this->task)){
             $this->contentHtml = null;
             return;
         }
-        if(is_null($this->task->getContent())){
+        if (is_null($this->task->getContent())){
             $this->contentHtml = null;
             return;
         }
         $html = "";
-        if($this->date->isToday()){
+        if ($this->date->isToday()){
             $html .= "<tr class=\"".$SETTINGS->todayClassName."\">";
-        }else{
+        } else {
             $html .= "<tr>";
         }
         $html .= "<td>";
@@ -375,10 +377,10 @@ class ClassInfo{
      * @return bool 存在していればtrueを返す
      */
     public function doesContentExist(){
-        if(is_null($this->task)){
+        if (is_null($this->task)){
             return false;
         }
-        if(is_null($this->task->getContent())){
+        if (is_null($this->task->getContent())){
             return false;
         }
         return true;

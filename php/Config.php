@@ -123,70 +123,70 @@ class Config{
         $config = parse_ini_file($mainPass, true);
         // 代入したときの返り値がNULLならば取得に失敗したと判断して
         // 例外をスローする。
-        if(is_null($this->dbPriset = $config["Main"]["DatabasePriset"])){
+        if (is_null($this->dbPriset = $config["Main"]["DatabasePriset"])){
             throw new Exception("全体configのDatabasePrisetの".
                                 "値が見つかりません。");
         }
-        if(is_null($this->mode = $config["Main"]["Mode"])){
+        if (is_null($this->mode = $config["Main"]["Mode"])){
             throw new Exception("全体configのModeの値が見つかりません。");
         }
-        if(is_null($this->dbHost = $config[$this->dbPriset]["Host"])){
+        if (is_null($this->dbHost = $config[$this->dbPriset]["Host"])){
             throw new Exception("全体configのHostの値が見つかりません。");
         }
-        if(is_null($this->dbName = $config[$this->dbPriset]["DbName"])){
+        if (is_null($this->dbName = $config[$this->dbPriset]["DbName"])){
             throw new Exception("全体configのDbNameの値が見つかりません。");
         }
-        if(is_null($this->dbUser = $config[$this->dbPriset]["Username"])){
+        if (is_null($this->dbUser = $config[$this->dbPriset]["Username"])){
             throw new Exception("全体configのUsernameの値が見つかりません。");
         }
-        if(is_null($this->dbPass = $config[$this->dbPriset]["Password"])){
+        if (is_null($this->dbPass = $config[$this->dbPriset]["Password"])){
             throw new Exception("全体configのPasswordの値が見つかりません。");
         }
         $config = parse_ini_file($subPass, true);
-        if(is_null($this->dbSubjects = $config["SubjectsTableName"])){
+        if (is_null($this->dbSubjects = $config["SubjectsTableName"])){
             throw new Exception("個別configのSubjectsTableName".
                                 "の値が見つかりません。");
         }
-        if(is_null($this->dbTasks = $config["TasksTableName"])){
+        if (is_null($this->dbTasks = $config["TasksTableName"])){
             throw new Exception("個別configのTasksTableName".
                                 "の値が見つかりません。");
         }
-        if(is_null($this->dbSchedules = $config["SchedulesTableName"])){
+        if (is_null($this->dbSchedules = $config["SchedulesTableName"])){
             throw new Exception("個別configのSchedulesTableName".
                                 "の値が見つかりません。");
         }
-        if(is_null($this->headOfTop = $config["headOfTop"])){
+        if (is_null($this->headOfTop = $config["headOfTop"])){
             $this->headOfTop = "月,火,水,木,金"; // 初期値
         }
-        if(is_null($this->headOfSide = $config["headOfSide"])){
+        if (is_null($this->headOfSide = $config["headOfSide"])){
             $this->headOfSide = "1,2,3"; // 初期値
         }
-        if(is_null($this->showTopHead = intval($config["showTopHead"]))){
+        if (is_null($this->showTopHead = intval($config["showTopHead"]))){
             $this->showTopHead = 1; // 初期値
-        }else{
+        } else {
             // 0以外の数が入っていた場合は1にする。
-            if($this->showTopHead === 0){
+            if ($this->showTopHead === 0){
                 $this->showTopHead = 1;
             }
         }
-        if(is_null($this->showSideHead = intval($config["showSideHead"]))){
+        if (is_null($this->showSideHead = intval($config["showSideHead"]))){
             $this->showSideHead = 1; //初期値
-        }else{
+        } else {
             // 0以外の数が入っていた場合は1にする。
-            if($this->showSideHead === 0){
+            if ($this->showSideHead === 0){
                 $this->showTopHead = 0;
             }
         }
-        if(is_null($this->showPeriodWeek = $config["showPeriodWeek"])){
+        if (is_null($this->showPeriodWeek = $config["showPeriodWeek"])){
             $this->showPeriodWeek = "-1,3"; //初期値
         }
-        if(is_null($this->todayClassName = $config["todayClassName"])){
+        if (is_null($this->todayClassName = $config["todayClassName"])){
             $this->todayClassName = "today";
         }
-        if(is_null($this->taskClassName = $config["taskClassName"])){
+        if (is_null($this->taskClassName = $config["taskClassName"])){
             $this->taskClassName = "task";
         }
-        if(is_null($this->tableClassName = $config["tableClassName"])){
+        if (is_null($this->tableClassName = $config["tableClassName"])){
             $this->tableClassName = "";
         }
     }
@@ -198,7 +198,7 @@ class Config{
      * @return string       アクセスしようとした変数の値
      */
     public function __get($name){
-        switch($name){
+        switch ($name){
             case "dbPriset":
                 return $this->dbPriset;
             case "mode":

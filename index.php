@@ -2,18 +2,22 @@
 <html lang="ja">
     <head>
         <?php include "./common.php"; ?>
-        <?php TimetableCarbon::setTestNow(TimetableCarbon::parse("2016/2/8")) ?>
+        <?php include "./parts/sessionLogin.php"; ?>
+        <?php TimetableCarbon::setTestNow(TimetableCarbon::parse("2016/1/9")); ?>
     </head>
     <body>
         <?php include "./parts/header.html"; ?>
         <div class="container">
             <?php
-            switch($_GET["page"]){
+            switch ($_GET["page"]){
                 case null:
                     include "./parts/toppage.php";
                     break;
                 case "timetable1":
                     include "./parts/timetable1.php";
+                    break;
+                case "login":
+                    include "./parts/loginForm.php";
                     break;
                 default:
                     include "./parts/error.php";
