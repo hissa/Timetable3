@@ -79,4 +79,13 @@ class Database{
             return static::encode($stmt);
         }
     }
+
+    /**
+     * 直前にinsertしたレコードの情報を返します。
+     * @param  string $name 取得したいフィールド名
+     * @return anyType       結果
+     */
+    public function lastInsertId($name){
+        return $this->pdo->lastInsertId($name);
+    }
 }
