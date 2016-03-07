@@ -186,6 +186,11 @@ class Task{
         return Carbon::parse($result[0][0]);
     }
 
+    /**
+     * タスクidを元にdeletedを取得します。
+     * @param  int $id タスクid
+     * @return int     deletedの値
+     */
     protected static function fetchDeleted($id){
         global $SETTINGS;
         $db = new Database();
@@ -193,7 +198,7 @@ class Task{
                 " where id=".$id.";";
         $stmt = $db->query($sql);
         $result = Database::encode($stmt);
-        return $result[0][0];
+        return (int)$result[0][0];
     }
 
     /**
@@ -202,6 +207,9 @@ class Task{
      */
     protected function canAddToDatabase(){
         if ($this->doesIdExist()){
+            return false;
+        }
+        if (static::fetchTask($this->date, $this->subject)){
             return false;
         }
         return true;
@@ -247,6 +255,7 @@ class Task{
     /**
      * 新しいTaskとして自身のインスタンスの情報をデータベースに追加します。
      * データベースに追加する条件を満たしていなければ例外をスローします。
+     * @return string 追加したTaskのid
      */
     public function addNewTask(){
         global $SETTINGS;
@@ -259,6 +268,7 @@ class Task{
                 $this->subject->getId().",\"".$this->content."\",\"".
                 Carbon::now()."\");";
         $db->query($sql);
+        return $db->lastInsertId("id");
     }
 
     /**
@@ -272,7 +282,8 @@ class Task{
         }
         $db = new Database();
         $sql = "update ".$SETTINGS->dbTasks." set content=\"".$this->content.
-                "\" where id=".$this->id.";";
+                "\", deleted=".($this->deleted == 1 ? 1 : 0).
+                " where id=".$this->id.";";
         $db->query($sql);
     }
 
