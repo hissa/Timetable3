@@ -380,12 +380,104 @@ class Administrator{
         return $this->loggedIn == true ? true : false;
     }
 
+    /**
+     * アクションログを書き込みます。
+     * @param  string $action 詳細
+     */
+    protected function writeActionLog($action){
+        $id = $this->id;
+        $datetime = Carbon::now()->format("Y-m-d H:i:s");
+        $db = new Database();
+        $sql = "insert into `action_logs`(`actioned`, `administrator_id`,".
+               " `action`) values(?, ?, ?);";
+        $stmt = $db->prepare($sql);
+        $result = $db->execute($stmt, [$datetime, $id, $action], false);
+    }
+
+    /**
+     * 操作ができるかどうかを確認します。
+     * このメソッドは操作ができない場合に例外を発生させます。
+     * @param  int $requestPermissionLevel 権限レベル
+     * @return bool                         可能であればtrueを返す
+     */
+    protected function canAction($requestPermissionLevel){
+        if (!$this->isLoggedIn()){
+            throw new Exception("ログインしてください。");
+        }
+        if (!$this->doesHavePermission($requestPermissionLevel)){
+            throw new Exception("操作権限が足りません。");
+        }
+        return true;
+    }
+
+    /**
+     * 課題詳細を上書きします。
+     * 操作ができない場合は例外が発生します。
+     * @param int $id 対象のタスクid
+     */
+    public function setContent($id, $content){
+        $requestLevel = 2;
+        $this->canAction($requestLevel);
+        $task = Task::fetch($id);
+        $task->setContent($content);
+        $task->overwriteToDatabase();
+        $action = $this->name."がTask".$id."に".$content."を上書きしました。";
+        $this->writeActionLog($action);
+    }
+
+    /**
+     * Taskを削除します。
+     * 操作ができない場合は例外が発生します。
+     * @param  int $id タスクid
+     */
+    public function deleteTask($id){
+        $requestLevel = 3;
+        $this->canAction($requestLevel);
+        $task = Task::fetch($id);
+        $task->delete();
+        $task->overwriteToDatabase();
+        $action = $this->name."がTask".$id."を削除しました。";
+        $this->writeActionLog($action);
+    }
+
+    /**
+     * Taskを作成します。
+     * 操作ができない場合は例外が発生します。
+     * @param Carbon\Carbon $date      日付
+     * @param Subject $subject 教科
+     * @return int 作成されたTaskのIDを返す
+     */
+    public function addTask($date, $subject){
+        $requestLevel = 3;
+        $this->canAction($requestLevel);
+        $task = Task::create($date, $subject, "");
+        $addedTaskId = $task->addNewTask();
+        $action = $this->name."がTask".$addedTaskId."を追加しました。";
+        $this->writeActionLog($action);
+        return $addedTaskId;
+    }
+
+    /**
+     * Taskを作成して同時に詳細も追加します。
+     * このメソッドを使用した場合でもアクションログは別々に記録されます。
+     * @param Carbon\Carbon $date    日付
+     * @param Subject $subject 教科
+     * @param string $content 内容
+     */
+    public function addTaskSetContent($date, $subject, $content){
+        $requestLevel = 3;
+        $this->canAction($requestLevel);
+        $id = $this->addTask($date, $subject);
+        $this->setContent($id, $content);
+    }
+
+    /**
+     * 操作権限が足りているかどうかを確認します。
+     * @param  int $requestlevel 必要レベル
+     * @return bool              足りていればtrueを返す
+     */
+    private function doesHavePermission($requestLevel){
+        return $this->permissionLevel >= $requestLevel;
+    }
+
 }
-//
-// $SETTINGS = new Config("../config.ini", "../timetable1.ini");
-// $admin = Administrator::fetch(1);
-// $admin->name = "hissatest";
-// $admin->update();
-// var_dump($admin);
-// $admin = Administrator::create("hissa2", 0, "test2", 1);
-// $admin->add();
