@@ -208,6 +208,28 @@ class Timetable{
         return $html;
     }
 
+    /**
+     * 指定された期間の課題一覧を生成します。
+     * @param  Carbon\Carbon $start 始まる日付
+     * @param  Carbon\Carbon $end   終わる日付
+     * @return string        表のhtml
+     */
+    public static function createTaskList($start, $end){
+        $taskList = Task::fetchTaskList($start, $end);
+        $html = "";
+        $html .= "<table class=\"table table-bordered table-striped\">";
+        $html .= "<thead><tr>";
+        $html .= "<th>日付</th><th>教科</th><th>詳細</th><th>編集</th>";
+        $html .= "</tr></thead><tbody>";
+        $i = 0;
+        while(!is_null($taskList[$i])){
+            $html .= $taskList[$i]->getTaskEditRow();
+            $i++;
+        }
+        $html .= "</tbody></table>";
+        return $html;
+    }
+
 }
 
 /**
@@ -340,7 +362,7 @@ class ClassInfo{
             $this->contentHtml = null;
             return;
         }
-        if (is_null($this->task->getContent())){
+        if (!$this->task->getContent()){
             $this->contentHtml = null;
             return;
         }

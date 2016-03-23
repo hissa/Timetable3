@@ -114,6 +114,12 @@ class Config{
     private $tableClassName;
 
     /**
+     * 自身の設定の名前
+     * @var string
+     */
+    private $settingName;
+
+    /**
      * このクラスのコンストラクタです。
      * @param string 全体configファイルのパス
      * @param string 個別configファイルのパス
@@ -189,6 +195,9 @@ class Config{
         if (is_null($this->tableClassName = $config["tableClassName"])){
             $this->tableClassName = "";
         }
+        if(is_null($this->settingName = $config["settingName"])){
+            $this->settingName = "Noname";
+        }
     }
 
     /**
@@ -233,6 +242,8 @@ class Config{
                 return $this->taskClassName;
             case "tableClassName":
                 return $this->tableClassName;
+            case "settingName":
+                return $this->settingName;
             default:
                 throw new Exception("存在しない変数がアクセスされました。");
         }

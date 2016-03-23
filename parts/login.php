@@ -6,7 +6,7 @@ $SETTINGS = new Config("../config.ini", "../timetable1.ini");
 
 define("LOGIN_FORM", "../index.php?page=login");
 if (!isset($_POST["name"]) || !isset($_POST["password"])){
-    header("Location: ".LOGIN_FORM."&failed=1");
+    header("Location: ".LOGIN_FORM."&msg=failed");
     die();
 }
 
@@ -16,7 +16,7 @@ $pass = $_POST["password"];
 try {
     $admin = Administrator::loginFromName($name, $pass);
 } catch(Exception $e){
-    header("Location: ".LOGIN_FORM."&failed=1");
+    header("Location: ".LOGIN_FORM."&msg=failed");
 }
 
 session_start();

@@ -5,10 +5,16 @@
         </div>
         <div class="panel-body">
             <?php
-            if (isset($_GET["failed"])){
+            if ($_GET["msg"] == "failed"){
                 echo "<div class=\"alert alert-danger\">";
                 echo "<span class=\"glyphicon glyphicon-remove-sign\" aria-hidden=\"true\"></span>";
                 echo " ログインに失敗しました。";
+                echo "</div>\n";
+            }
+            if ($_GET["msg"] == "logedout"){
+                echo "<div class=\"alert alert-success\">";
+                echo "<span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true\"></span>";
+                echo " ログアウトしました。";
                 echo "</div>\n";
             }
             ?>

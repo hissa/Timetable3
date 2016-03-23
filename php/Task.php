@@ -335,6 +335,130 @@ class Task{
         }
     }
 
+    /**
+     * 指定された期間に存在する課題を取得します。
+     * @param  Carbon\Carbon $startDay 取得を始める日付
+     * @param  Carbon\Carbon $endDay   取得を終わる日付
+     * @return Task[]           存在する課題の一覧
+     */
+    public static function fetchTaskList($startDay, $endDay){
+        global $SETTINGS;
+        $db = new Database();
+        $sql = "select id from ".$SETTINGS->dbTasks.
+               " where date between ? and ?;";
+        $stmt = $db->prepare($sql);
+        $format = "Y-m-d";
+        $start = $startDay->format($format);
+        $end = $endDay->format($format);
+        $result = $db->execute($stmt, [$start, $end]);
+        $i = 0;
+        while($result[$i][0]){
+            $list[$i] = Task::fetch((int)$result[$i][0]);
+            $i++;
+        }
+        return $list;
+    }
+
+    /**
+     * 課題編集一覧に表示する行を出力します。
+     * @return string 行のhtml
+     */
+    public function getTaskEditRow(){
+        global $SETTINGS;
+        $html = "";
+        $content = is_null($this->content) ? "" : $this->content;
+        $format = "j日";
+        $html .= "<tr>";
+        $html .= "<td>".$this->date->format($format)."</td>";
+        $html .= "<td>".$this->subject->getShortName()."</td>";
+        $html .= "<td>".mb_strimwidth($content, 0, 4, "...")."</td>";
+        $html .= "<td>";
+        $html .= "<button type=\"button\" class=\"btn btn-primary btn-xs\"".
+                 " data-toggle=\"modal\" data-target=\"#modalTaskEdit".
+                 $this->id."\"><span class=\"glyphicon glyphicon-pencil\"></span>".
+                 "</button>";
+        $html .= "　<button type=\"button\" class=\"btn btn-danger btn-xs\"".
+                 " data-toggle=\"modal\" data-target=\"#modalTaskDelete".
+                 $this->id."\"><span class=\"glyphicon glyphicon-remove\"></span>".
+                 "</button>";
+        $html .= "</td>";
+        $html .= "</tr>";
+        // モーダルウィンドウ（編集）の作成
+        $html .= "<div class=\"modal fade\" id=\"modalTaskEdit".
+                 $this->id."\" tabindex=\"-1\">";
+        $html .= "<form action=\"editTask.php\" method=\"post\">";
+        $html .= "<div class=\"modal-dialog\">";
+        $html .= "<div class=\"modal-content\">";
+        $html .= "<div class=\"modal-header\">";
+        $html .= "<button type=\"button\" class=\"close\"".
+                 " data-dismiss=\"modal\"><span>×</span></button>";
+        $html .= $this->date->format("n月j日-").$this->subject->getShortName().
+                 "の編集";
+        $html .= "</div>";
+        $html .= "<div class=\"modal-body\">";
+        $html .= "<p>".$this->date->format("Y年n月j日")."の".
+                 $this->subject->getName()."の課題 「".
+                ($this->content == true ? $this->content : "詳細なし")."」</p>";
+        $html .= "<p>を編集します。</p>";
+        $html .= "<hr>";
+        $html .= "<input type=\"text\" name=\"settingName\" value=\"".
+                 $SETTINGS->settingName."\" class=\"hidden\">";
+        $html .= "<input type=\"text\" name=\"taskId\" value~\"".
+                 $this->id."\" class=\"hidden\">";
+        $html .= "<div class=\"form-group\">";
+        $html .= "<label for=\"InputContent\">課題の詳細</label>";
+        $html .= "<input type=\"text\" class=\"form-control\" ".
+                 "id=\"InputContent\" name=\"inputContent\" ".
+                 "placeholder=\"課題の詳細を入力してください。\">";
+        $html .= "</div>";
+        $html .= "</div>";
+        $html .= "<div class=\"modal-footer\">";
+        $html .= "<button type=\"submit\" class=\"btn btn-primary\">";
+        $html .= "編集";
+        $html .= "</button>";
+        $html .= "<button type=\"button\" class=\"btn btn-default\"".
+                 " data-dismiss=\"modal\">キャンセル</button>";
+        $html .= "</div>";
+        $html .= "</div>";
+        $html .= "</div>";
+        $html .= "</form>";
+        $html .= "</div>";
+        // モーダルウィンドウ（削除）の作成
+        $html .= "<div class=\"modal fade\" id=\"modalTaskDelete".
+                 $this->id."\" tabindex=\"-1\">";
+        $html .= "<div class=\"modal-dialog\">";
+        $html .= "<div class=\"modal-content\">";
+        $html .= "<div class=\"modal-header\">";
+        $html .= "<button type=\"button\" class=\"close\"".
+                 " data-dismiss=\"modal\"><span>×</span></button>";
+        $html .= $this->date->format("n月j日-").$this->subject->getShortName().
+                 "の削除";
+        $html .= "</div>";
+        $html .= "<div class=\"modal-body\">";
+        $html .= "<p>".$this->date->format("Y年n月j日")."の".
+                 $this->subject->getName()."の課題 「".
+                ($this->content == true ? $this->content : "詳細なし")."」</p>";
+        $html .= "を削除しますか？";
+        $html .= "</div>";
+        $html .= "<div class=\"modal-footer\">";
+        $html .= "<form aciton=\"deleteTask.php\" method=\"post\">";
+        $html .= "<input type=\"text\" name=\"settingName\" value=\"".
+                 $SETTINGS->settingName."\" class=\"hidden\">";
+        $html .= "<input type=\"text\" name=\"taskId\" value~\"".
+                 $this->id."\" class=\"hidden\">";
+        $html .= "<button type=\"submit\" class=\"btn btn-danger\">";
+        $html .= "削除";
+        $html .= "</button>";
+        $html .= "<button type=\"button\" class=\"btn btn-default\"".
+                 " data-dismiss=\"modal\">キャンセル</button>";
+        $html .= "</form>";
+        $html .= "</div>";
+        $html .= "</div>";
+        $html .= "</div>";
+        $html .= "</div>";
+        return $html;
+    }
+
 }
 
 /**
@@ -460,6 +584,41 @@ class Subject{
         $stmt = $db->query($sql);
         $result = Database::encode($stmt);
         return new static(intval($result[0][0]));
+    }
+
+    /**
+     * gradeを指定して教科リストを取得します
+     * @param  string $grade 設定名
+     * @return Subject[]        教科リスト
+     */
+    public static function fetchSubjectsList($grade){
+        global $SETTINGS;
+        $db = new Database();
+        $sql = "select id from ".$SETTINGS->dbSubjects.
+                " where grade=?;";
+        $stmt = $db->prepare($sql);
+        $result = $db->execute($stmt, [$grade]);
+        $i = 0;
+        while ($result[$i][0]){
+            $list[$i] = new static((int)$result[$i][0]);
+            $i++;
+        }
+        return $list;
+    }
+
+    /**
+     * Nameを検索してマッチした教科のidを取得
+     * @param  string $name 教科名
+     * @return Subject       教科
+     */
+    public static function searchName($name){
+        global $SETTINGS;
+        $db = new Database();
+        $sql = "select id from ".$SETTINGS->dbSubjects.
+                " where name=?;";
+        $stmt = $db->prepare($sql);
+        $result = $db->execute($stmt, [$name]);
+        return new static((int)$result[0][0]);
     }
 }
 ?>

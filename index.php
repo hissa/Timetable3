@@ -19,6 +19,9 @@
                 case "login":
                     include "./parts/loginForm.php";
                     break;
+                case "logout":
+                    include "./parts/logout.php";
+                    break;
                 default:
                     include "./parts/error.php";
                     break;

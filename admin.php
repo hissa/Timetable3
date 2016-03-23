@@ -2,7 +2,7 @@
 <html lang="ja">
     <head>
         <?php include "./common.php"; ?>
-        <?php TimetableCarbon::setTestNow(TimetableCarbon::parse("2016/2/8")) ?>
+        <?php TimetableCarbon::setTestNow(TimetableCarbon::parse("2015/12/8")) ?>
     </head>
     <body>
         <?php include "./parts/header.html"; ?>
@@ -10,10 +10,10 @@
             <?php
             switch ($_GET["page"]){
                 case null:
-                    include "./parts/toppage.php";
+                    include "./parts/adminMenu.php";
                     break;
-                case "timetable1":
-                    include "./parts/timetable1.php";
+                case "list":
+                    include "./parts/taskList.php";
                     break;
                 default:
                     include "./parts/error.php";
