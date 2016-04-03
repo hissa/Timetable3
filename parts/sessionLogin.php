@@ -1,5 +1,4 @@
 <?php
-
 if (isset($_COOKIE[session_name()])){
     session_start();
     try {
@@ -8,6 +7,11 @@ if (isset($_COOKIE[session_name()])){
         Administrator::sessionLogout();
     }
 } else {
-    $admin = null;
+    if(isset($_COOKIE["autoLogin"])){
+        $result = Administrator::autoLogin();
+        $result->changeKey();
+    }else{
+        $admin = null;
+    }
 }
 // var_dump($admin);

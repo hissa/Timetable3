@@ -28,12 +28,12 @@
                     id="InputPassword" placeholder="パスワード"
                     name="password">
                 </div>
-                <!-- <div class="checkbox">
+                <div class="checkbox">
                     <label>
                         <input type="checkbox" name="keepLogin" value="true">
                         ログインを継続する
                     </label>
-                </div> -->
+                </div>
                 <?php
                 $redirect = isset($_SERVER["HTTP_REFERER"])
                             ? $_SERVER["HTTP_REFERER"] : "../index.php";

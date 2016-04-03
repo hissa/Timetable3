@@ -480,4 +480,87 @@ class Administrator{
         return $this->permissionLevel >= $requestLevel;
     }
 
+    /**
+     * 自動ログインのテーブルに自身を追加します。
+     */
+    public function addAutoLogin(){
+        $key = uniqid(rand(),1);
+        $hasshedKey = password_hash($key, PASSWORD_DEFAULT);
+        $db = new Database();
+        $sql = "insert into auto_login(user_id, last_logedin, login_key, user_agent) ".
+                "value(".$this->id.", \"".Carbon::now()->format("Y-m-d H:i:s").
+                "\", \"".$key."\", \"".$_SERVER["HTTP_USER_AGENT"]."\");";
+        $db->query($sql);
+        $keepTime = time() + 60 * 60 * 24 * 14;
+        setcookie("autoLogin", $hasshedKey, $keepTime, "/");
+        setcookie("userId", $this->id, $keepTime, "/");
+    }
+
+    /**
+     * 自動ログインのキーを変更して期限もリセットします。
+     */
+    public function changeKey(){
+        $this->destroyAutoLogin();
+        $this->addAutoLogin();
+    }
+
+    /**
+     * 自動ログインのためのクッキーを削除します。
+     */
+    public static function destroyAutoLoginCookie(){
+        setcookie("autoLogin", "", time()-1000, "/");
+        setcookie("userId", "", time()-1000, "/");
+    }
+
+    /**
+     * 自動ログインを解除します。
+     */
+    public function destroyAutoLogin(){
+        $ua = $_SERVER["HTTP_USER_AGENT"];
+        $db = new Database();
+        $sql = "delete from auto_login ".
+            "where user_id=".$this->id." and user_agent=\"".$ua."\";";
+        $db->query($sql);
+        static::destroyAutoLoginCookie();
+    }
+
+    /**
+     * 継続ログインをオンにしてる場合に自動でログインします。
+     * @return bool 成功ならtrueを返す
+     */
+    public static function autoLogin(){
+        if(!isset($_COOKIE["autoLogin"])){
+            throw new Exception("オートログインに失敗しました。");
+        }
+        $ua = $_SERVER["HTTP_USER_AGENT"];
+        $userid = $_COOKIE["userId"];
+        $db = new Database();
+        $sql = "select user_id, login_key from auto_login ".
+                "where user_id=".$userid." and user_agent=\"".$ua."\" ".
+                "order by last_logedin desc;";
+        $stmt = $db->query($sql);
+        $result = Database::encode($stmt);
+        $hashedKey = $_COOKIE["autoLogin"];
+        if($result[0]){
+            $key = $result[0]["login_key"];
+            if(password_verify($key, $hashedKey)){
+                $admin = static::fetch($userid);
+                $admin->forcedLogin();
+                return $admin;
+            }else{
+                throw new Exception("オートログインに失敗しました。");
+            }
+        }else{
+            throw new Exception("オートログインに失敗しました。");
+        }
+        throw new Exception("解決できません。");
+    }
+
+    /**
+     * 強制的にログインします。
+     */
+    public function forcedLogin(){
+        $this->loggedIn = true;
+    }
+
 }

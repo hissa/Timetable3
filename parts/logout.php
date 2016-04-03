@@ -6,4 +6,5 @@ $SETTINGS = new Config("./config.ini", "./timetable1.ini");
 
 define("LOGIN_FORM", "./index.php?page=login");
 Administrator::sessionLogout();
+$admin->destroyAutoLogin();
 header("Location: ".LOGIN_FORM."&msg=logedout");

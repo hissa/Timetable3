@@ -22,4 +22,7 @@ try {
 session_start();
 $_SESSION["name"] = $name;
 $_SESSION["password"] = $pass;
+if($_POST["keepLogin"]){
+    $admin->addAutoLogin();
+}
 header("Location: ".$_POST["redirect"]);
