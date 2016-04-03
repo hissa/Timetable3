@@ -1,6 +1,6 @@
 <?php
 $SETTINGS = new Config("./config.ini", "./timetable1.ini");
-$table = new Timetable();
+$table = new Timetable(2);
 ?>
 <ul class="nav nav-tabs">
     <?php

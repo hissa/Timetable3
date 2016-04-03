@@ -48,6 +48,12 @@ class Task{
     protected $deleted;
 
     /**
+     * 学年
+     * @var int
+     */
+    protected $grade;
+
+    /**
      * このクラスのコンストラクタです。
      * 全てのメンバ変数を指定してインスタンスを作る時のみnewを使用し、
      * 通常はfetchやcreateメソッドを使用すること。
@@ -60,7 +66,8 @@ class Task{
      */
     protected function __construct($id = null, $date = null,
                                 $subject = null, $content = null,
-                                $modified = null, $deleted = null
+                                $modified = null, $deleted = null,
+                                $grade = null
                                 ){
         // 決まった型かnullに当てはまらない場合は処理を中断します。
         if (gettype($id) !== "integer" && !is_null($id)){
@@ -84,6 +91,7 @@ class Task{
         $this->content = $content;
         $this->modified = $modified;
         $this->deleted = $deleted;
+        $this->grade = $grade;
     }
 
     /**
@@ -100,7 +108,8 @@ class Task{
         $content = static::fetchContent($id);
         $modified = static::fetchModified($id);
         $deleted = static::fetchDeleted($id);
-        return new self($id, $date, $subject, $content, $modified, $deleted);
+        $grade = static::fetchGrade($id);
+        return new self($id, $date, $subject, $content, $modified, $deleted, $grade);
     }
 
     /**
@@ -110,7 +119,7 @@ class Task{
      * @param  string $content タスクの内容
      * @return Task          作成されたインスタンス
      */
-    public static function create($date, $subject, $content){
+    public static function create($date, $subject, $content, $grade){
         if (is_a($date, "Carbon\Carbon") !== true){
             throw new Exception("dateがCarbonクラスのインスタンスではありません。");
         }
@@ -124,7 +133,10 @@ class Task{
         if (gettype($content) !== "string"){
             throw new Exception("contentはstringで指定してください。");
         }
-        return new self(null, $date, $subject, $content, null);
+        if(gettype($grade) !== "integer"){
+            throw new Exception("gradeはint型で指定してください。");
+        }
+        return new self(null, $date, $subject, $content, null, $grade);
     }
 
     /**
@@ -202,6 +214,21 @@ class Task{
     }
 
     /**
+     * タスクidを元にgradeを取得します。
+     * @param  int $id タスクid
+     * @return int     gradeの値
+     */
+    protected static function fetchGrade($id){
+        global $SETTINGS;
+        $db = new Database();
+        $sql = "select grade from ".$SETTINGS->dbTasks.
+                " where id=".$id.";";
+        $stmt = $db->query($sql);
+        $result = Database::encode($stmt);
+        return (int)$result[0][0];
+    }
+
+    /**
      * 自身のインスタンスの情報をデータベースに追加することができるかどうかを確認します。
      * @return boolean 追加することができるならばtrueを返す
      */
@@ -209,7 +236,7 @@ class Task{
         if ($this->doesIdExist()){
             return false;
         }
-        if (static::fetchTask($this->date, $this->subject)){
+        if (static::fetchTask($this->date, $this->subject, $this->grade)){
             return false;
         }
         return true;
@@ -263,10 +290,10 @@ class Task{
             throw new Exception("データベースに追加できる条件を満たしていません。");
         }
         $db = new Database();
-        $sql = "insert into ".$SETTINGS->dbTasks."(date, subject_id, content, modified)".
+        $sql = "insert into ".$SETTINGS->dbTasks."(date, subject_id, content, modified, grade)".
                 "values(\"".$this->date->format("Y-m-d")."\",".
                 $this->subject->getId().",\"".$this->content."\",\"".
-                Carbon::now()."\");";
+                Carbon::now()."\",".$this->grade.");";
         $db->query($sql);
         return $db->lastInsertId("id");
     }
@@ -313,19 +340,20 @@ class Task{
     }
 
     /**
-     * 日付と教科を指定してそれに合う情報があればTaskインスタンスで返します。
+     * 日付と教科と学年を指定してそれに合う情報があればTaskインスタンスで返します。
      * 削除フラグが立っているものは取得しません。
      * @param  Carbon\Carbon $date    日付
      * @param  Subject $subject 教科
+     * @param int       $grade  学年
      * @return Task|NULL          情報
      */
-    public static function fetchTask($date, $subject){
+    public static function fetchTask($date, $subject, $grade){
         global $SETTINGS;
         $db = new Database();
         $sql = "select id from ".$SETTINGS->dbTasks.
                 " where date=\"".$date->format("Y-m-d")."\" and".
                 " subject_id=".$subject->getId()." and".
-                " deleted=0;";
+                " deleted=0 and grade=".$grade.";";
         $stmt = $db->query($sql);
         $result = Database::encode($stmt);
         if ($result[0][0]){
@@ -339,13 +367,16 @@ class Task{
      * 指定された期間に存在する課題を取得します。
      * @param  Carbon\Carbon $startDay 取得を始める日付
      * @param  Carbon\Carbon $endDay   取得を終わる日付
+     * @param int           $grade      取得する学年（0を指定すると全て）
      * @return Task[]           存在する課題の一覧
      */
-    public static function fetchTaskList($startDay, $endDay){
+    public static function fetchTaskList($startDay, $endDay, $grade = 0){
         global $SETTINGS;
         $db = new Database();
         $sql = "select id from ".$SETTINGS->dbTasks.
-               " where date between ? and ?;";
+               " where ".
+               ($grade == 0 ? "" : "grade=".$grade." and").
+               " date between ? and ?;";
         $stmt = $db->prepare($sql);
         $format = "Y-m-d";
         $start = $startDay->format($format);
@@ -401,8 +432,6 @@ class Task{
                 ($this->content == true ? $this->content : "詳細なし")."」</p>";
         $html .= "<p>を編集します。</p>";
         $html .= "<hr>";
-        $html .= "<input type=\"text\" name=\"settingName\" value=\"".
-                 $SETTINGS->settingName."\" class=\"hidden\">";
         $html .= "<input type=\"text\" name=\"taskId\" value~\"".
                  $this->id."\" class=\"hidden\">";
         $html .= "<div class=\"form-group\">";
@@ -442,8 +471,6 @@ class Task{
         $html .= "</div>";
         $html .= "<div class=\"modal-footer\">";
         $html .= "<form aciton=\"deleteTask.php\" method=\"post\">";
-        $html .= "<input type=\"text\" name=\"settingName\" value=\"".
-                 $SETTINGS->settingName."\" class=\"hidden\">";
         $html .= "<input type=\"text\" name=\"taskId\" value~\"".
                  $this->id."\" class=\"hidden\">";
         $html .= "<button type=\"submit\" class=\"btn btn-danger\">";

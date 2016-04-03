@@ -36,6 +36,12 @@ class TimetableCarbon extends Carbon{
 class Timetable{
 
     /**
+     * 表示する学年
+     * @var int
+     */
+    protected $grade;
+
+    /**
      * 作成したHTML
      * @var string
      */
@@ -62,10 +68,11 @@ class Timetable{
     /**
      * このクラスのコンストラクタです。
      */
-    public function __construct(){
+    public function __construct($grade){
         global $SETTINGS;
         $this->topHead = explode(",", $SETTINGS->headOfTop);
         $this->sideHead = explode(",", $SETTINGS->headOfSide);
+        $this->grade = $grade;
         $this->setClassInfo();
     }
 
@@ -131,7 +138,7 @@ class Timetable{
                 $date = $date->startOfWeek();
                 $subject = Subject::fetchSchedule($j + 1, $i + 1);
                 $infos[$i][$j] = new ClassInfo($date->addDays($j),
-                                             $j, $subject);
+                                             $j, $subject, $this->grade);
             }
         }
         return $infos;
@@ -275,12 +282,18 @@ class ClassInfo{
     protected $contentHtml;
 
     /**
+     * 学年
+     * @var int
+     */
+    protected $grade;
+
+    /**
      * このクラスのコンストラクタです。
      * @param Carbon\Carbon $date 日付
      * @param int $classNum 授業コマ目
      * @param Subject $subject 教科
      */
-    public function __construct($date, $classNum, $subject){
+    public function __construct($date, $classNum, $subject, $grade){
         if (is_subclass_of($date, "Carbon\Carbon") !== true){
             throw new Exception("dateはCarbonまたはTimetableCarbonで指定してください。");
         }
@@ -290,8 +303,9 @@ class ClassInfo{
         $this->date = $date;
         $this->classNum = $classNum;
         $this->subject = $subject;
+        $this->grade = $grade;
         $this->html = "";
-        $this->task = Task::fetchTask($date, $subject);
+        $this->task = Task::fetchTask($date, $subject, $grade);
         $this->createHtml();
         $this->createContentHtml();
     }

@@ -34,9 +34,8 @@ $previousUrl = $myUrl."?".http_build_query($get);
                             課題の追加
                         </div>
                         <div class="modal-body">
-                            <input type="text" name="settingName"
-                            value="<?php echo $SETTINGS->settingName; ?>"
-                            class="hidden">
+                            <input type="text" name="grade"
+                            value="1" class="hidden">
                             <div class="form-group">
                                 <label for="dateInput">日付</label>
                                 <input type="text"
@@ -57,7 +56,7 @@ $previousUrl = $myUrl."?".http_build_query($get);
                                 <select class="form-control" name="subject"
                                 id="subjectInput">
                                     <?php
-                                    $list = Subject::fetchSubjectsList($SETTINGS->settingName);
+                                    $list = Subject::fetchSubjectsList(1);
                                     $i = 0;
                                     while(!is_null($list[$i])){
                                         echo "<option>".$list[$i]->getName()."</option>";
