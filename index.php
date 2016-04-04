@@ -1,8 +1,21 @@
+<?php include "./requireList.php";?>
+<?php include "./parts/sessionLogin.php"; ?>
+<?php
+if(is_null($admin)){
+    switch($_GET["page"]){
+        case "timetable1":
+        case "logout":
+            header("Location: ?page=login");
+            break;
+        default:
+            break;
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="ja">
     <head>
         <?php include "./common.php"; ?>
-        <?php include "./parts/sessionLogin.php"; ?>
         <?php TimetableCarbon::setTestNow(TimetableCarbon::parse("2016/1/9")); ?>
     </head>
     <body>

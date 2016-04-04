@@ -1,3 +1,5 @@
+<?php include "./requireList.php";?>
+<?php include "./parts/sessionLogin.php"; ?>
 <!DOCTYPE html>
 <html lang="ja">
     <head>

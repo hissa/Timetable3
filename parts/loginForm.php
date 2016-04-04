@@ -35,8 +35,11 @@
                     </label>
                 </div>
                 <?php
-                $redirect = isset($_SERVER["HTTP_REFERER"])
-                            ? $_SERVER["HTTP_REFERER"] : "../index.php";
+                // 元のページにリダイレクトできないことがあるので
+                // すべてトップページに戻ることとする。
+                // $redirect = isset($_SERVER["HTTP_REFERER"])
+                //             ? $_SERVER["HTTP_REFERER"] : "../index.php";
+                $redirect = "../index.php";
                 ?>
                 <input type="text" class="form-control hidden"
                 value="<?php echo $redirect; ?>" name="redirect">
