@@ -6,7 +6,7 @@
         <?php TimetableCarbon::setTestNow(TimetableCarbon::parse("2016/1/9")); ?>
     </head>
     <body>
-        <?php include "./parts/header.html"; ?>
+        <?php include "./parts/header.php"; ?>
         <div class="container">
             <?php
             switch ($_GET["page"]){

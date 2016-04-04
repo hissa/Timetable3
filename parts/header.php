@@ -14,9 +14,23 @@
                 <li><a href="index.php?page=timetable1">
                     1年次
                 </a></li>
-                <li><a href="#">メニューＢ</a></li>
-                <li><a href="#">メニューＣ</a></li>
             </ul>
+            <?php
+            if(!is_null($admin)){
+                echo "<p class=\"navbar-text\">";
+                echo $admin->name." でログインされています。";
+                echo "</p>";
+                echo "<button type=\"button\" class=\"btn btn-default navbar-btn\"".
+                    " onclick=\"location.href='?page=logout'\">";
+                echo "ログアウト";
+                echo "</button>";
+            }else{
+                echo "<button type=\"button\" class=\"btn btn-primary navbar-btn\"".
+                    " onclick=\"location.href='?page=login'\">";
+                echo "ログイン";
+                echo "</button>";
+            }
+            ?>
         </div>
     </div>
 </nav>
