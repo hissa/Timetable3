@@ -5,6 +5,7 @@ if(is_null($admin)){
     switch($_GET["page"]){
         case "timetable1":
         case "logout":
+        case "taskedit":
             header("Location: ?page=login");
             break;
         default:
@@ -34,6 +35,9 @@ if(is_null($admin)){
                     break;
                 case "logout":
                     include "./parts/logout.php";
+                    break;
+                case "taskedit":
+                    include "./parts/taskList.php";
                     break;
                 default:
                     include "./parts/error.php";

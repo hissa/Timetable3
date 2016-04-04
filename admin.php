@@ -1,5 +1,10 @@
 <?php include "./requireList.php";?>
 <?php include "./parts/sessionLogin.php"; ?>
+<?php
+if(is_null($admin)){
+    header("Location: ./index.php?page=login");
+}
+?>
 <!DOCTYPE html>
 <html lang="ja">
     <head>
