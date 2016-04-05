@@ -1,5 +1,5 @@
-<?php include "./requireList.php";?>
-<?php include "./parts/sessionLogin.php"; ?>
+<?php require_once "./requireList.php";?>
+<?php require_once "./parts/sessionLogin.php"; ?>
 <?php
 if(is_null($admin)){
     switch($_GET["page"]){
@@ -23,6 +23,14 @@ if(is_null($admin)){
         <?php include "./parts/header.php"; ?>
         <div class="container">
             <?php
+            switch($_GET["msg"]){
+                case "succed":
+                    include "./parts/alert-succed.php";
+                    break;
+                case "error":
+                    include "./parts/alert-error.php";
+                    break;
+            }
             switch ($_GET["page"]){
                 case null:
                     include "./parts/toppage.php";
@@ -40,7 +48,7 @@ if(is_null($admin)){
                     include "./parts/taskList.php";
                     break;
                 default:
-                    include "./parts/error.php";
+                    include "./parts/alert-notfound.php";
                     break;
             }
             ?>

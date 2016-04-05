@@ -136,7 +136,7 @@ class Task{
         if(gettype($grade) !== "integer"){
             throw new Exception("gradeはint型で指定してください。");
         }
-        return new self(null, $date, $subject, $content, null, $grade);
+        return new self(null, $date, $subject, $content, null, null, $grade);
     }
 
     /**
@@ -376,7 +376,7 @@ class Task{
         $sql = "select id from ".$SETTINGS->dbTasks.
                " where ".
                ($grade == 0 ? "" : "grade=".$grade." and").
-               " date between ? and ?;";
+               " date between ? and ? and deleted=0;";
         $stmt = $db->prepare($sql);
         $format = "Y-m-d";
         $start = $startDay->format($format);
@@ -402,7 +402,7 @@ class Task{
         $html .= "<tr>";
         $html .= "<td>".$this->date->format($format)."</td>";
         $html .= "<td>".$this->subject->getShortName()."</td>";
-        $html .= "<td>".mb_strimwidth($content, 0, 4, "...")."</td>";
+        $html .= "<td>".mb_strimwidth($content, 0, 7, "...")."</td>";
         $html .= "<td>";
         $html .= "<button type=\"button\" class=\"btn btn-primary btn-xs\"".
                  " data-toggle=\"modal\" data-target=\"#modalTaskEdit".
@@ -417,7 +417,7 @@ class Task{
         // モーダルウィンドウ（編集）の作成
         $html .= "<div class=\"modal fade\" id=\"modalTaskEdit".
                  $this->id."\" tabindex=\"-1\">";
-        $html .= "<form action=\"editTask.php\" method=\"post\">";
+        $html .= "<form action=\"taskEdit.php?action=edit\" method=\"post\">";
         $html .= "<div class=\"modal-dialog\">";
         $html .= "<div class=\"modal-content\">";
         $html .= "<div class=\"modal-header\">";
@@ -432,7 +432,7 @@ class Task{
                 ($this->content == true ? $this->content : "詳細なし")."」</p>";
         $html .= "<p>を編集します。</p>";
         $html .= "<hr>";
-        $html .= "<input type=\"text\" name=\"taskId\" value~\"".
+        $html .= "<input type=\"text\" name=\"taskId\" value=\"".
                  $this->id."\" class=\"hidden\">";
         $html .= "<div class=\"form-group\">";
         $html .= "<label for=\"InputContent\">課題の詳細</label>";
@@ -469,17 +469,17 @@ class Task{
                 ($this->content == true ? $this->content : "詳細なし")."」</p>";
         $html .= "を削除しますか？";
         $html .= "</div>";
+        $html .= "<form action=\"taskEdit.php?action=delete\" method=\"post\">";
         $html .= "<div class=\"modal-footer\">";
-        $html .= "<form aciton=\"deleteTask.php\" method=\"post\">";
-        $html .= "<input type=\"text\" name=\"taskId\" value~\"".
+        $html .= "<input type=\"text\" name=\"taskId\" value=\"".
                  $this->id."\" class=\"hidden\">";
         $html .= "<button type=\"submit\" class=\"btn btn-danger\">";
         $html .= "削除";
         $html .= "</button>";
         $html .= "<button type=\"button\" class=\"btn btn-default\"".
                  " data-dismiss=\"modal\">キャンセル</button>";
-        $html .= "</form>";
         $html .= "</div>";
+        $html .= "</form>";
         $html .= "</div>";
         $html .= "</div>";
         $html .= "</div>";

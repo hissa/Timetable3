@@ -447,10 +447,10 @@ class Administrator{
      * @param Subject $subject 教科
      * @return int 作成されたTaskのIDを返す
      */
-    public function addTask($date, $subject){
+    public function addTask($date, $subject, $grade){
         $requestLevel = 3;
         $this->canAction($requestLevel);
-        $task = Task::create($date, $subject, "");
+        $task = Task::create($date, $subject, "", (int)$grade);
         $addedTaskId = $task->addNewTask();
         $action = $this->name."がTask".$addedTaskId."を追加しました。";
         $this->writeActionLog($action);
@@ -464,10 +464,10 @@ class Administrator{
      * @param Subject $subject 教科
      * @param string $content 内容
      */
-    public function addTaskSetContent($date, $subject, $content){
+    public function addTaskSetContent($date, $subject, $content, $grade){
         $requestLevel = 3;
         $this->canAction($requestLevel);
-        $id = $this->addTask($date, $subject);
+        $id = $this->addTask($date, $subject, $grade);
         $this->setContent($id, $content);
     }
 
@@ -477,7 +477,9 @@ class Administrator{
      * @return bool              足りていればtrueを返す
      */
     private function doesHavePermission($requestLevel){
-        return $this->permissionLevel >= $requestLevel;
+        // 現在権限機能は無効にしているので常にtrueを返す。
+        // return $this->permissionLevel >= $requestLevel;
+        return true;
     }
 
     /**

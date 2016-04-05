@@ -26,7 +26,7 @@ $previousUrl = $myUrl."?".http_build_query($get);
         <div class="modal fade" id="modalAddTask" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="addTask.php" method="post">
+                    <form action="taskEdit.php?action=add" method="post">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">
                                 <span>×</span>
@@ -51,6 +51,8 @@ $previousUrl = $myUrl."?".http_build_query($get);
                                 });
                                 </script>
                             </div>
+                            <input type="text" name="grade" value="1"
+                            class="hidden">
                             <div class="form-group">
                                 <label for="subjectInput">教科</label>
                                 <select class="form-control" name="subject"
@@ -59,7 +61,8 @@ $previousUrl = $myUrl."?".http_build_query($get);
                                     $list = Subject::fetchSubjectsList(1);
                                     $i = 0;
                                     while(!is_null($list[$i])){
-                                        echo "<option>".$list[$i]->getName()."</option>";
+                                        echo "<option>".$list[$i]->getId().".".
+                                            $list[$i]->getName()."</option>";
                                         $i++;
                                     }
                                     ?>
