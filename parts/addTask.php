@@ -24,5 +24,9 @@ try{
     }
     succed();
 }catch(Exception $e){
+    if($e->getMessage() == "データベースに追加できる条件を満たしていません。"){
+        overlapped();
+        die();
+    }
     error();
 }

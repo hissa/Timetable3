@@ -30,6 +30,9 @@ if(is_null($admin)){
                 case "error":
                     include "./parts/alert-error.php";
                     break;
+                case "overlap":
+                    include "./parts/alert-overlap.php";
+                    break;
             }
             switch ($_GET["page"]){
                 case null:

@@ -454,7 +454,7 @@ class Administrator{
         $addedTaskId = $task->addNewTask();
         $action = $this->name."がTask".$addedTaskId."を追加しました。";
         $this->writeActionLog($action);
-        return $addedTaskId;
+        return (int)$addedTaskId;
     }
 
     /**
