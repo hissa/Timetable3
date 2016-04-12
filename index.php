@@ -12,6 +12,15 @@ if(is_null($admin)){
             break;
     }
 }
+if(!is_null($admin)){
+    switch($_GET["page"]){
+        case "newAccount":
+            header("Location: ?msg=loggedin");
+            break;
+        default:
+            break;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -33,6 +42,9 @@ if(is_null($admin)){
                 case "overlap":
                     include "./parts/alert-overlap.php";
                     break;
+                case "loggedin":
+                    include "./parts/alert-loggedin.php";
+                    break;
             }
             switch ($_GET["page"]){
                 case null:
@@ -49,6 +61,13 @@ if(is_null($admin)){
                     break;
                 case "taskedit":
                     include "./parts/taskList.php";
+                    break;
+                case "newAccount":
+                    include "./parts/newAccountForm.php";
+                    break;
+                // 偽のページからのPOSTでできちゃうアレ
+                case "newAccountCheck":
+                    include "./parts/newAccountCheck.php";
                     break;
                 default:
                     include "./parts/alert-notfound.php";

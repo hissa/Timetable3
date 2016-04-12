@@ -21,7 +21,7 @@
             <form action="./parts/login.php" method="post">
                 <div class="form-group">
                     <input type="text" class="form-control" id="inputId"
-                    placeholder="管理者名" name="name">
+                    placeholder="ユーザー名" name="name">
                 </div>
                 <div class="form-group">
                     <input type="password" class="form-control"

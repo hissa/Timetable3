@@ -565,4 +565,35 @@ class Administrator{
         $this->loggedIn = true;
     }
 
+    /**
+     * 招待コードが使用できるか確認します。
+     * @param  string $key 招待コード
+     * @return int|bool      使用できればコードid,使用できなければfalse
+     */
+    public static function canUseInviteKey($key){
+        $db = new Database();
+        $sql = "select id from invite_keys where code=? and used is null";
+        $stmt = $db->prepare($sql);
+        $result = $db->execute($stmt, [$key]);
+        if(is_null($result[0][0])){
+            return false;
+        }
+        return (int)$result[0][0];
+    }
+
+    /**
+     * 招待コードを使用して無効化します。
+     * @param int $id 招待コードid
+     */
+    public static function UseInviteKey($id){
+        if(!$id){
+            throw new Exception("招待IDが無効です。");
+        }
+        $db = new Database();
+        $sql = "update invite_keys set used=? where id=?;";
+        $stmt = $db->prepare($sql);
+        $datetime = Carbon::now()->format("Y-m-d H:i:s");
+        $db->execute($stmt, [$datetime, $id], false);
+    }
+
 }
